@@ -1,0 +1,21 @@
+# Normalize Git files.
+.gitattribute text
+.gitignore    text
+
+# Normalize LICENSE and README.
+LICENSE   text
+README.md text
+
+# Normalize Gradle build and wrapper properties files.
+build.gradle              text
+gradle-wrapper.properties text
+
+# Ensure Gradle wrapper scripts have LF and CRLF in the working directory for Unix and Windows, respectively.
+gradlew     text eol=lf
+gradlew.bat text eol=crlf
+
+# Normalize Java source files.
+*.java text diff=java
+
+# Mark Gradle wrapper as binary.
+gradle-wrapper.jar binary
