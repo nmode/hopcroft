@@ -1,0 +1,63 @@
+plugins {
+    // Provide the ability to declare external and internal dependencies.
+	id 'java-library'
+    // Provide the ability to publish build artifacts to a Maven repository.
+    id 'maven-publish'
+}
+
+repositories {
+    // Use jCenter for resolving dependencies.
+    jcenter()
+}
+
+dependencies {
+    // Use the JUnit (v4.12) testing framework.
+    testImplementation 'junit:junit:4.12'
+}
+
+publishing {
+	// Define the GitHub publishing repository. 
+	repositories {
+    	maven {
+    		// Set the repository name and URL.
+        	name = 'GitHubPackages'
+            url = uri("https://maven.pkg.github.com/nmode/hopcroft")
+            // Set GitHub username and token (as defined in ~/.gradle/gradle.properties).
+            credentials {
+                username = project.findProperty("gpr.user")
+                password = project.findProperty("gpr.key")
+            }
+        }
+    }
+    // Describe the files and metadata to be published.
+    publications {
+        gpr(MavenPublication) {
+        	// Set group ID, artifact ID and version number for the generated POM file.
+        	groupId 'ca.nmode'
+            artifactId 'hopcroft'
+            version '1.0'
+            from(components.java)
+            // Set additional attributes for the generated POM file.
+            pom {
+            	// Set the project name and description.
+            	name = 'Hopcroft'
+            	description = 'A library for finite-state machines.'
+            	// Distribute the project under the GPLv3.
+            	licenses {
+            		license {
+            			name = 'GPL-3.0'
+                        url = 'https://www.gnu.org/licenses/gpl-3.0.en.html'
+            		}
+            	}
+            	// Hello, world!
+            	developers {
+            		developer {
+            			id = 'nmode'
+            			name = 'Naeem Model'
+            			email = 'me@nmode.ca'
+            		}
+            	}
+            }
+    	}
+	}
+}
