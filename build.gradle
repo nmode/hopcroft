@@ -10,9 +10,15 @@ repositories {
     jcenter()
 }
 
+test {
+    // Provide support for executing tests on the JUnit platform.
+    useJUnitPlatform()
+}
+
 dependencies {
-    // Use the JUnit (v4.12) testing framework.
-    testImplementation 'junit:junit:4.12'
+    // Use the JUnit Jupiter (v5.7.0) testing framework.
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
 }
 
 publishing {
