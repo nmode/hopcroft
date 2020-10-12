@@ -7,8 +7,9 @@ import ca.nmode.hopcroft.states.State;
 
 /**
  * A nondeterministic finite-{@link State state} acceptor. It is a {@link NondeterministicFSM nondeterministic
- * finite-state machine} which {@link #accepts(List) accepts} an input if any branch of its computation ends in an
- * {@link #acceptStates() accept state}, and rejects otherwise.
+ * finite-state machine} which {@link #accepts(List) accepts} an input if any branch of its
+ * {@link NondeterministicFSM#compute(List) computation} ends in an {@link #acceptStates() accept state}, and rejects
+ * otherwise.
  *
  * @param <S> the type of this nondeterministic finite-state acceptor's states
  * @param <I> the type of this nondeterministic finite-state acceptor's input elements
@@ -26,7 +27,7 @@ public interface NondeterministicFSA<S extends State, I, K, V, C> extends Nondet
      * 
      * @return this nondeterministic finite-state acceptor's unmodifiable set of accept states
      * 
-     * @see #states()
+     * @see NondeterministicFSM#states()
      */
     Set<S> acceptStates();
 
@@ -41,7 +42,7 @@ public interface NondeterministicFSA<S extends State, I, K, V, C> extends Nondet
      * @return {@code true} if the final state of any branch of this nondeterministic finite-state acceptor's
      *         computation on the specified input is in its set of accept states, {@code false} otherwise
      * 
-     * @see #compute(List)
+     * @see NondeterministicFSM#compute(List)
      * @see #acceptStates()
      */
     boolean accepts(List<I> input);
@@ -57,7 +58,7 @@ public interface NondeterministicFSA<S extends State, I, K, V, C> extends Nondet
      * @return {@code true} if every input in the specified set is accepted by this nondeterministic finite-state
      *         acceptor, {@code false} otherwise
      * 
-     * @see #compute(List)
+     * @see NondeterministicFSM#compute(List)
      * @see #accepts(List)
      */
     boolean recognizes(Set<List<I>> inputs);

@@ -61,8 +61,8 @@ public interface DeterministicFSM<S extends State, I, K, V, C>
     S startState();
 
     /**
-     * Returns this deterministic finite-state machine's computation on the specified input. The returned computation is
-     * not {@code null}.
+     * Returns this deterministic finite-state machine's {@link DeterministicFSM computation} on the specified input.
+     * The returned computation is not {@code null}.
      * 
      * @param input the sequence of elements to compute this deterministic finite-state machine on
      * 

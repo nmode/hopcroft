@@ -62,8 +62,8 @@ public interface NondeterministicFSM<S extends State, I, K, V, C>
     S startState();
 
     /**
-     * Returns this nondeterministic finite-state machine's computation on the specified input. The returned computation
-     * is not {@code null}.
+     * Returns this nondeterministic finite-state machine's {@link NondeterministicFSM computation} on the specified
+     * input. The returned computation is not {@code null}.
      * 
      * @param input the sequence of elements to compute this nondeterministic finite-state machine on
      * 
