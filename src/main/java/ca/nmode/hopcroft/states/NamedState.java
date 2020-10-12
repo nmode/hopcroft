@@ -1,7 +1,7 @@
 package ca.nmode.hopcroft.states;
 
 /**
- * A {@link State} with a string identifier (name).
+ * A {@link State state} with a string identifier (name).
  *
  * @author Naeem Model
  */
@@ -27,7 +27,7 @@ public final class NamedState implements State {
 
     /**
      * Determines whether this named state is equal to the specified object. Equality holds if {@code obj} is a
-     * {@link NamedState} whose name is equal this one's.
+     * {@link NamedState named state} whose name is equal this one's.
      *
      * @return {@code true} if this named state is equal to {@code obj}, {@code false} otherwise
      * 

@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * A {@link State} composed of substates.
+ * A {@link State state} composed of substates.
  * 
  * @param <S> the type of this meta-state's substates
  *
@@ -42,7 +42,7 @@ public final class MetaState<S extends State> implements State {
 
     /**
      * Determines whether this meta-state is equal to the specified object. Equality holds if {@code obj} is a
-     * {@link MetaState} whose set of substates equals this one's.
+     * {@link MetaState meta-state} whose set of substates equals this one's.
      * 
      * @return {@code true} if this meta-state is equal to {@code obj}, {@code false} otherwise
      * 
