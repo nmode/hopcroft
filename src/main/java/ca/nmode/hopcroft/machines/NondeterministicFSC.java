@@ -32,6 +32,7 @@ public interface NondeterministicFSC<S extends State, I, K, V, C> extends Nondet
      * 
      * @see NondeterministicFSM#compute(List)
      * @see NondeterministicFSM#states()
+     * @see NondeterministicFSM#inputElements()
      */
     Set<S> classify(List<I> input);
 }

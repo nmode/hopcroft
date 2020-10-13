@@ -29,6 +29,7 @@ public interface DeterministicFSC<S extends State, I, K, V, C> extends Determini
      * 
      * @see DeterministicFSM#compute(List)
      * @see DeterministicFSM#states()
+     * @see DeterministicFSM#inputElements()
      */
     S classify(List<I> input);
 }

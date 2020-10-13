@@ -43,6 +43,7 @@ public interface DeterministicFSA<S extends State, I, K, V, C> extends Determini
      * 
      * @see DeterministicFSM#compute(List)
      * @see #acceptStates()
+     * @see DeterministicFSM#inputElements()
      */
     boolean accepts(List<I> input);
 
@@ -59,6 +60,7 @@ public interface DeterministicFSA<S extends State, I, K, V, C> extends Determini
      * 
      * @see DeterministicFSM#compute(List)
      * @see #accepts(List)
+     * @see DeterministicFSM#inputElements()
      */
     boolean recognizes(Set<List<I>> inputs);
 }

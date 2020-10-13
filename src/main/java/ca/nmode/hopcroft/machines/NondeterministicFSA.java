@@ -44,6 +44,7 @@ public interface NondeterministicFSA<S extends State, I, K, V, C> extends Nondet
      * 
      * @see NondeterministicFSM#compute(List)
      * @see #acceptStates()
+     * @see NondeterministicFSM#inputElements()
      */
     boolean accepts(List<I> input);
 
@@ -60,6 +61,7 @@ public interface NondeterministicFSA<S extends State, I, K, V, C> extends Nondet
      * 
      * @see NondeterministicFSM#compute(List)
      * @see #accepts(List)
+     * @see NondeterministicFSM#inputElements()
      */
     boolean recognizes(Set<List<I>> inputs);
 }
