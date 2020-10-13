@@ -12,6 +12,13 @@ import ca.nmode.hopcroft.states.State;
  * {@link NondeterministicFSM#transitions() transition} in every branch of the {@link NondeterministicFSM#compute(List)
  * computation} of an input to an {@link #outputElements() output element}. The process which yields the corresponding
  * output sequence for each branch is known as its {@link #transduce() transduction} on the input.
+ * 
+ * @param <S> the type of this nondeterministic finite-state mealy transducer's states
+ * @param <I> the type of this nondeterministic finite-state mealy transducer's input elements
+ * @param <K> the type of the keys of this nondeterministic finite-state mealy transducer's transition map
+ * @param <V> the type of the values of this nondeterministic finite-state mealy transducer's transition map
+ * @param <C> the type of this nondeterministic finite-state mealy transducer's computations
+ * @param <O> the type of this nondeterministic finite-state mealy transducer's output elements
  *
  * @author Naeem Model
  */

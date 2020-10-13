@@ -12,6 +12,13 @@ import ca.nmode.hopcroft.states.State;
  * {@link DeterministicFSM#compute(List) computation} of an input to an {@link #outputElements() output element}. The
  * process which yields the corresponding output sequence is known as its {@link #transduce() transduction} on the
  * input.
+ * 
+ * @param <S> the type of this deterministic finite-state moore transducer's states
+ * @param <I> the type of this deterministic finite-state moore transducer's input elements
+ * @param <K> the type of the keys of this deterministic finite-state moore transducer's transition map
+ * @param <V> the type of the values of this deterministic finite-state moore transducer's transition map
+ * @param <C> the type of this deterministic finite-state moore transducer's computations
+ * @param <O> the type of this deterministic finite-state moore transducer's output elements
  *
  * @author Naeem Model
  */
