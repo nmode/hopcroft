@@ -9,9 +9,9 @@ import ca.nmode.hopcroft.states.State;
 /**
  * A deterministic finite-{@link State state} mealy transducer. It is a {@link DeterministicFSM deterministic
  * finite-state machine} which {@link #translations() translates} each undergone {@link DeterministicFSM#transitions()
- * transition} in the {@link DeterministicFSM#compute(List) computation} of an input to an {@link #outputElements()
- * output element}. The process which yields the corresponding output sequence is known as its {@link #transduce()
- * transduction} on the input.
+ * transition} in the {@link DeterministicFSM#computation(List) computation} of an input to an {@link #outputElements()
+ * output element}. The process which yields the corresponding output sequence is known as its
+ * {@link #transduction(List) transduction} on the input.
  * 
  * @param <S> the type of this deterministic finite-state mealy transducer's states
  * @param <I> the type of this deterministic finite-state mealy transducer's input elements
@@ -54,9 +54,9 @@ public interface MealyDFST<S extends State, I, K, V, C, O> extends Deterministic
      * 
      * @return this deterministic finite-state mealy transducer's transduction on the specified input
      *
-     * @see DeterministicFSM#compute(List)
-     * @see #translations()
      * @see DeterministicFSM#inputElements()
+     * @see DeterministicFSM#computation(List)
+     * @see #translations()
      */
-    List<O> transduce(List<I> input);
+    List<O> transduction(List<I> input);
 }

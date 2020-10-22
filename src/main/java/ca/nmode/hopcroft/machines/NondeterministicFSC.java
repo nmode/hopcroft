@@ -7,8 +7,8 @@ import ca.nmode.hopcroft.states.State;
 
 /**
  * A nondeterministic finite-{@link State state} classifier. It is a {@link NondeterministicFSM nondeterministic
- * finite-state machine} which {@link #classify(List) classifies} an input into the final state of every branch of its
- * {@link NondeterministicFSM#compute(List) computation}.
+ * finite-state machine} which {@link #classification(List) classifies} an input into the final state of every branch of
+ * its {@link NondeterministicFSM#computation(List) computation}.
  * 
  * @param <S> the type of this nondeterministic finite-state classifier's states
  * @param <I> the type of this nondeterministic finite-state classifier's input elements
@@ -30,9 +30,9 @@ public interface NondeterministicFSC<S extends State, I, K, V, C> extends Nondet
      * @return a set containing the final state of every branch of this nondeterministic finite-state classifier's
      *         computation on the specified input
      * 
-     * @see NondeterministicFSM#compute(List)
      * @see NondeterministicFSM#states()
      * @see NondeterministicFSM#inputElements()
+     * @see NondeterministicFSM#computation(List)
      */
-    Set<S> classify(List<I> input);
+    Set<S> classification(List<I> input);
 }

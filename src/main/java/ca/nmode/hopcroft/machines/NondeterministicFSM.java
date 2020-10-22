@@ -10,7 +10,7 @@ import ca.nmode.hopcroft.states.State;
  * A nondeterministic finite-{@link State state} machine. Beginning at its {@link #startState() start state} and on
  * receiving a sequence of {@link #inputElements() input elements}, the machine optionally reads any number of elements
  * and {@link #transitions() transitions} to none or multiple of its {@link #states() states} until some halting
- * condition is met. This process is known as its {@link #compute(List) computation} on the input. When none or more
+ * condition is met. This process is known as its {@link #computation(List) computation} on the input. When none or more
  * than one transitions are made, the computation <i>branches</i> into a parallel computation. On a given branch, if an
  * element for which there are no possible transitions from the machine's current state is read, the branch ends up in a
  * {@code null} state and halts. The entire computation halts if every branch halts.
@@ -73,5 +73,5 @@ public interface NondeterministicFSM<S extends State, I, K, V, C>
      * 
      * @see #inputElements()
      */
-    C compute(List<I> input);
+    C computation(List<I> input);
 }

@@ -7,8 +7,8 @@ import ca.nmode.hopcroft.states.State;
 
 /**
  * A deterministic finite-{@link State state} acceptor. It is a {@link DeterministicFSM deterministic finite-state
- * machine} which {@link #accepts(List) accepts} an input if its {@link DeterministicFSM#compute(List) computation} ends
- * in an {@link #acceptStates() accept state}, and rejects otherwise.
+ * machine} which {@link #accepts(List) accepts} an input if its {@link DeterministicFSM#computation(List) computation}
+ * ends in an {@link #acceptStates() accept state}, and rejects otherwise.
  *
  * @param <S> the type of this deterministic finite-state acceptor's states
  * @param <I> the type of this deterministic finite-state acceptor's input elements
@@ -41,7 +41,7 @@ public interface DeterministicFSA<S extends State, I, K, V, C> extends Determini
      * @return {@code true} if the final state of this deterministic finite-state acceptor's computation on the
      *         specified input is in its set of accept states, {@code false} otherwise
      * 
-     * @see DeterministicFSM#compute(List)
+     * @see DeterministicFSM#computation(List)
      * @see #acceptStates()
      * @see DeterministicFSM#inputElements()
      */
@@ -58,9 +58,9 @@ public interface DeterministicFSA<S extends State, I, K, V, C> extends Determini
      * @return {@code true} if every input in the specified set is accepted by this deterministic finite-state acceptor,
      *         {@code false} otherwise
      * 
-     * @see DeterministicFSM#compute(List)
-     * @see #accepts(List)
      * @see DeterministicFSM#inputElements()
+     * @see DeterministicFSM#computation(List)
+     * @see #accepts(List)
      */
     boolean recognizes(Set<List<I>> inputs);
 }

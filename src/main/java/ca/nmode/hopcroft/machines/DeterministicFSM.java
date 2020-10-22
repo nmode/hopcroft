@@ -10,9 +10,9 @@ import ca.nmode.hopcroft.states.State;;
  * A deterministic finite-{@link State state} machine. Beginning at its {@link #startState() start state} and on
  * receiving a sequence of {@link #inputElements() input elements}, the machine reads an element and
  * {@link #transitions() transitions} to any one of its {@link #states() states} in an alternating manner until some
- * halting condition is met. This process is known as its {@link #compute(List) computation} on the input. If an element
- * for which there are no possible transitions from the machine's current state is read, it ends up in a {@code null}
- * state and the computation halts.
+ * halting condition is met. This process is known as its {@link #computation(List) computation} on the input. If an
+ * element for which there are no possible transitions from the machine's current state is read, it ends up in a
+ * {@code null} state and the computation halts.
  *
  * @param <S> the type of this deterministic finite-state machine's states
  * @param <I> the type of this deterministic finite-state machine's input elements
@@ -72,5 +72,5 @@ public interface DeterministicFSM<S extends State, I, K, V, C>
      * 
      * @see #inputElements()
      */
-    C compute(List<I> input);
+    C computation(List<I> input);
 }

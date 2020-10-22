@@ -9,9 +9,10 @@ import ca.nmode.hopcroft.states.State;
 /**
  * A nondeterministic finite-{@link State state} mealy transducer. It is a {@link NondeterministicFSM nondeterministic
  * finite-state machine} which {@link #translations() translates} each undergone
- * {@link NondeterministicFSM#transitions() transition} in every branch of the {@link NondeterministicFSM#compute(List)
- * computation} of an input to an {@link #outputElements() output element}. The process which yields the corresponding
- * output sequence for each branch is known as its {@link #transduce() transduction} on the input.
+ * {@link NondeterministicFSM#transitions() transition} in every branch of the
+ * {@link NondeterministicFSM#computation(List) computation} of an input to an {@link #outputElements() output element}.
+ * The process which yields the corresponding output sequence for each branch is known as its {@link #transduction(List)
+ * transduction} on the input.
  * 
  * @param <S> the type of this nondeterministic finite-state mealy transducer's states
  * @param <I> the type of this nondeterministic finite-state mealy transducer's input elements
@@ -54,9 +55,9 @@ public interface MealyNFST<S extends State, I, K, V, C, O> extends Nondeterminis
      * 
      * @return this nondeterministic finite-state mealy transducer's transduction on the specified input
      *
-     * @see NondeterministicFSM#compute(List)
-     * @see #translations()
      * @see NondeterministicFSM#inputElements()
+     * @see NondeterministicFSM#computation(List)
+     * @see #translations()
      */
-    Set<List<O>> transduce(List<I> input);
+    Set<List<O>> transduction(List<I> input);
 }

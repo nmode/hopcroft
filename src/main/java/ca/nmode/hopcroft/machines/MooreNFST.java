@@ -9,8 +9,8 @@ import ca.nmode.hopcroft.states.State;
 /**
  * A nondeterministic finite-{@link State state} moore transducer. It is a {@link NondeterministicFSM nondeterministic
  * finite-state machine} which {@link #translations() translates} each visited state in every branch the
- * {@link NoneterministicFSM#compute(List) computation} of an input to an {@link #outputElements() output element}. The
- * process which yields the corresponding output sequence for each branch is known as its {@link #transduce()
+ * {@link NondeterministicFSM#computation(List) computation} of an input to an {@link #outputElements() output element}.
+ * The process which yields the corresponding output sequence for each branch is known as its {@link #transduction(List)
  * transduction} on the input.
  * 
  * @param <S> the type of this nondeterministic finite-state moore transducer's states
@@ -54,9 +54,9 @@ public interface MooreNFST<S extends State, I, K, V, C, O> extends Nondeterminis
      * 
      * @return this nondeterministic finite-state moore transducer's transduction on the specified input
      *
-     * @see NondeterministicFSM#compute(List)
-     * @see #translations()
      * @see NondeterministicFSM#inputElements()
+     * @see NondeterministicFSM#computation(List)
+     * @see #translations()
      */
-    Set<List<O>> transduce(List<I> input);
+    Set<List<O>> transduction(List<I> input);
 }
