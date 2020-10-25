@@ -1,5 +1,6 @@
 package ca.nmode.hopcroft.machines;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -114,7 +115,32 @@ public class OneWayDFSA<S extends State, I> extends AbstractDFSA<S, I, Entry<S, 
      */
     @Override
     public final boolean recognizes(Set<List<I>> inputs) {
-        // TODO
-        return false;
+        // Ensure the set of inputs neither is nor contains null.
+        if (inputs == null)
+            throw new NullPointerException(
+                    "A one-way deterministic finite-state machine cannot attempt to recognize a null set of inputs.");
+        if (inputs.contains(null))
+            throw new NullPointerException("A one-way deterministic finite-state machine cannot attempt to recognize a "
+                    + "set of inputs that contains null.");
+
+        // The empty set is recognized if there are no reachable accept states.
+        if (inputs.isEmpty())
+            return Collections.disjoint(acceptStates, reachableStates());
+
+        // Return true if every input in the set is accepted, false otherwise.
+        for (List<I> input : inputs)
+            if (!accepts(input))
+                return false;
+        return true;
+    }
+
+    /**
+     * Returns this one-way deterministic finite-state acceptor's set of reachable states. The returned set is a subset
+     * of this acceptor's set of states.
+     * 
+     * @return this one-way deterministic finite-state acceptor's set of reachable states
+     */
+    public final Set<S> reachableStates() {
+        return OneWayDFSMUtility.reachableStates(this);
     }
 }
