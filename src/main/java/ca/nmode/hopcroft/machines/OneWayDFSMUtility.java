@@ -7,13 +7,12 @@ import java.util.Map.Entry;
 
 import ca.nmode.hopcroft.states.State;
 
-/* A utility class used by the concrete finite-state machine implementations in this package. */
-class FSMUtility {
-    private FSMUtility() {}
+/* A utility class used by the one-way deterministic finite-state machines in this package. */
+class OneWayDFSMUtility {
+    private OneWayDFSMUtility() {}
 
     /* Verifies the transition maps of the one-way deterministic finite-state machines in this package. */
-    static <S extends State, I, C> void verifyOneWayDFSMTransitions(
-            DeterministicFSM<S, I, Entry<S, I>, S, C> oneWayDFSM) {
+    static <S extends State, I, C> void verifyTransitions(DeterministicFSM<S, I, Entry<S, I>, S, C> oneWayDFSM) {
         // Ensure the machine has a transition for every state-element pair.
         if (oneWayDFSM.transitions().size() != oneWayDFSM.states().size() * oneWayDFSM.inputElements().size())
             throw new IllegalArgumentException("Cannot construct a one-way deterministic finite-state machine whose "
@@ -37,7 +36,7 @@ class FSMUtility {
     }
 
     /* Computes the one-way deterministic finite-state machines in this package. */
-    static <S extends State, I, C> List<Entry<Entry<S, I>, S>> oneWayDFSMComputation(
+    static <S extends State, I, C> List<Entry<Entry<S, I>, S>> computation(
             DeterministicFSM<S, I, Entry<S, I>, S, C> oneWayDFSM, List<I> input) {
         // Ensure the input is not null.
         if (input == null)
@@ -65,10 +64,10 @@ class FSMUtility {
     }
 
     /* Classifies inputs for the one-way deterministic finite-state machines in this package. */
-    static <S extends State, I, C> S oneWayDFSMClassification(DeterministicFSM<S, I, Entry<S, I>, S, C> oneWayDFSM,
+    static <S extends State, I, C> S classification(DeterministicFSM<S, I, Entry<S, I>, S, C> oneWayDFSM,
             List<I> input) {
         // Return the final state of the computation.
-        List<Entry<Entry<S, I>, S>> computation = oneWayDFSMComputation(oneWayDFSM, input);
+        List<Entry<Entry<S, I>, S>> computation = computation(oneWayDFSM, input);
         return computation.get(computation.size() - 1).getValue();
     }
 }

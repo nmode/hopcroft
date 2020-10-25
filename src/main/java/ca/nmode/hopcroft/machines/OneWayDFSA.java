@@ -44,7 +44,7 @@ public class OneWayDFSA<S extends State, I> extends AbstractDFSA<S, I, Entry<S, 
     public OneWayDFSA(Set<S> states, Set<I> inputElements, Map<Entry<S, I>, S> transitions, S startState,
             Set<S> acceptStates) {
         super(states, inputElements, transitions, startState, acceptStates);
-        FSMUtility.verifyOneWayDFSMTransitions(this);
+        OneWayDFSMUtility.verifyTransitions(this);
     }
 
     /**
@@ -83,7 +83,7 @@ public class OneWayDFSA<S extends State, I> extends AbstractDFSA<S, I, Entry<S, 
      */
     @Override
     public final List<Entry<Entry<S, I>, S>> computation(List<I> input) {
-        return FSMUtility.oneWayDFSMComputation(this, input);
+        return OneWayDFSMUtility.computation(this, input);
     }
 
     /**
@@ -93,7 +93,7 @@ public class OneWayDFSA<S extends State, I> extends AbstractDFSA<S, I, Entry<S, 
      */
     @Override
     public final S classification(List<I> input) {
-        return FSMUtility.oneWayDFSMClassification(this, input);
+        return OneWayDFSMUtility.classification(this, input);
     }
 
     /**
