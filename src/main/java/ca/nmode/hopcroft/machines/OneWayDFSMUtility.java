@@ -1,9 +1,13 @@
 package ca.nmode.hopcroft.machines;
 
 import java.util.ArrayList;
+import java.util.Deque;
+import java.util.HashSet;
 import java.util.List;
 import java.util.AbstractMap.SimpleEntry;
+import java.util.ArrayDeque;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import ca.nmode.hopcroft.states.State;
 
@@ -69,5 +73,25 @@ class OneWayDFSMUtility {
         // Return the final state of the computation.
         List<Entry<Entry<S, I>, S>> computation = computation(oneWayDFSM, input);
         return computation.get(computation.size() - 1).getValue();
+    }
+
+    /* Retrieves the reachable states of the one-way deterministic finite-state machines in this package. */
+    static <S extends State, I, C> Set<S> reachableStates(DeterministicFSM<S, I, Entry<S, I>, S, C> oneWayDFSM) {
+        Set<S> reachableStates = new HashSet<>();
+        // Add the start state to the set of reachable states and add it to the visitation queue.
+        reachableStates.add(oneWayDFSM.startState());
+        Deque<S> visit = new ArrayDeque<>(reachableStates);
+
+        // Continue until transitions have been taken for all visited states on every input element.
+        while (!visit.isEmpty()) {
+            for (I inputElement : oneWayDFSM.inputElements()) {
+                Entry<S, I> transitionKey = new SimpleEntry<>(visit.getFirst(), inputElement);
+                // Add the resulting state of the transition to be visited if it was not already reached.
+                if (reachableStates.add(oneWayDFSM.transitions().get(transitionKey)))
+                    visit.add(oneWayDFSM.transitions().get(transitionKey));
+            }
+            visit.removeFirst();
+        }
+        return reachableStates;
     }
 }
