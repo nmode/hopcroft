@@ -135,10 +135,15 @@ public class OneWayDFSA<S extends State, I> extends AbstractDFSA<S, I, Entry<S, 
     }
 
     /**
-     * Returns this one-way deterministic finite-state acceptor's set of reachable states. The returned set is a subset
-     * of this acceptor's set of states.
+     * Returns this one-way deterministic finite-state acceptor's set of reachable states. A state is reachable if this
+     * acceptor has a sequence of zero or more transitions leading to it from its start state. The returned set is a
+     * subset of this acceptor's set of states.
      * 
      * @return this one-way deterministic finite-state acceptor's set of reachable states
+     * 
+     * @see DeterministicFSM#states()
+     * @see DeterministicFSM#transitions()
+     * @see DeterministicFSM#startState()
      */
     public final Set<S> reachableStates() {
         return OneWayDFSMUtility.reachableStates(this);
