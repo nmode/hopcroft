@@ -19,8 +19,7 @@ import ca.nmode.hopcroft.states.State;
  *
  * @author Naeem Model
  */
-public class OneWayDFSA<S extends State, I> extends AbstractDFSA<S, I, Entry<S, I>, S, List<Entry<Entry<S, I>, S>>>
-        implements DeterministicFSC<S, I, Entry<S, I>, S, List<Entry<Entry<S, I>, S>>> {
+public class OneWayDFSA<S extends State, I> extends AbstractDFSA<S, I, Entry<S, I>, S, List<Entry<Entry<S, I>, S>>> {
     /**
      * Constructs a one-way deterministic finite-state acceptor given a set of states, set of input elements, transition
      * map, start state and set of accept states.

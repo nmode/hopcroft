@@ -74,4 +74,21 @@ public interface NondeterministicFSM<S extends State, I, K, V, C>
      * @see #inputElements()
      */
     C computation(List<I> input);
+
+    /**
+     * Returns a set containing the final state of every branch of this nondeterministic finite-state machine's
+     * computation on the specified input.
+     * 
+     * @param input the sequence of elements to compute this nondeterministic finite-state machine on
+     * 
+     * @throws NullPointerException if {@code input} is {@code null}
+     * 
+     * @return a set containing the final state of every branch of this nondeterministic finite-state machine's
+     *         computation on the specified input
+     * 
+     * @see NondeterministicFSM#states()
+     * @see NondeterministicFSM#inputElements()
+     * @see NondeterministicFSM#computation(List)
+     */
+    Set<S> classification(List<I> input);
 }

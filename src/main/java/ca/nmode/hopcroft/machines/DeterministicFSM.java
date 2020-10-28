@@ -73,4 +73,19 @@ public interface DeterministicFSM<S extends State, I, K, V, C>
      * @see #inputElements()
      */
     C computation(List<I> input);
+
+    /**
+     * Returns the final state of this deterministic finite-state machine's computation on the specified input.
+     * 
+     * @param input the sequence of elements to compute this deterministic finite-state machine on
+     * 
+     * @throws NullPointerException if {@code input} is {@code null}
+     * 
+     * @return the final state of this deterministic finite-state machine's computation on the specified input
+     * 
+     * @see DeterministicFSM#states()
+     * @see DeterministicFSM#inputElements()
+     * @see DeterministicFSM#computation(List)
+     */
+    S classification(List<I> input);
 }
