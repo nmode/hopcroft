@@ -70,6 +70,59 @@ public class OneWayDFSA<S extends State, I> extends AbstractDFSA<S, I, Entry<S, 
     }
 
     /**
+     * Returns a one-way deterministic finite-state acceptor constructed from the specified deterministic finite-state
+     * machine's set of states, set of input elements, transition map and start state, with the specified set of accept
+     * states.
+     * 
+     * @param <S>          the type of the returned one-way deterministic finite-state acceptor's states
+     * @param <I>          the type of the returned one-way deterministic finite-state acceptor's input elements
+     * @param d            the deterministic finite-state machine whose set of states, set of input elements, transition
+     *                     map and start state is used to construct the returned one-way deterministic finite-state
+     *                     machine
+     * @param acceptStates the set of accept states of the new one-way deterministic finite-state acceptor
+     * 
+     * @throws NullPointerException
+     * @throws IllegalArgumentException
+     * 
+     * @return a one-way deterministic finite-state acceptor constructed from the specified deterministic finite-state
+     *         machine's set of states, set of input elements, transition map and start state, with the specified set of
+     *         accept state
+     * 
+     * @see #OneWayDFSA(Set, Set, Map, State, Set)
+     */
+    public static final <S extends State, I> OneWayDFSA<S, I> from(DeterministicFSM<S, I, Entry<S, I>, S, ?> d,
+            Set<S> acceptStates) {
+        // Ensure the specified deterministic finite-state machine is not null.
+        if (d == null)
+            throw new NullPointerException("Cannot construct a one-way deterministic finite-state acceptor from a null "
+                    + "deterministic finite-state machine.");
+        return new OneWayDFSA<>(d.states(), d.inputElements(), d.transitions(), d.startState(), acceptStates);
+    }
+
+    /**
+     * Returns a one-way deterministic finite-state acceptor constructed from the specified deterministic finite-state
+     * machine's set of states, set of input elements, transition map and start state, with an empty set of accept
+     * states.
+     * 
+     * @param <S> the type of the returned one-way deterministic finite-state acceptor's states
+     * @param <I> the type of the returned one-way deterministic finite-state acceptor's input elements
+     * @param d   the deterministic finite-state machine whose set of states, set of input elements, transition map and
+     *            start state is used to construct the returned one-way deterministic finite-state machine
+     * 
+     * @throws NullPointerException
+     * @throws IllegalArgumentException
+     * 
+     * @return a one-way deterministic finite-state acceptor constructed from the specified deterministic finite-state
+     *         machine's set of states, set of input elements, transition map and start state, with an empty set of
+     *         accept states
+     * 
+     * @see #OneWayDFSA(Set, Set, Map, State)
+     */
+    public static final <S extends State, I> OneWayDFSA<S, I> from(DeterministicFSM<S, I, Entry<S, I>, S, ?> d) {
+        return OneWayDFSA.from(d, Set.of());
+    }
+
+    /**
      * {@inheritDoc}
      * <p>
      * The computation is described by a list of entries. An entry at index {@code i} represents step {@code i} of the
