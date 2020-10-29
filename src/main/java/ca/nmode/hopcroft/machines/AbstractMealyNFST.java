@@ -21,7 +21,7 @@ import ca.nmode.hopcroft.states.State;
  *
  * @author Naeem Model
  */
-public abstract class AbstractMealyNFST<S extends State, I, K, V, C, O> extends AbstractMealyFST<S, I, K, V, O>
+public abstract class AbstractMealyNFST<S extends State, I, K, V, C, O> extends AbstractFST<S, I, K, V, O, K>
         implements MealyNFST<S, I, K, V, C, O> {
     /**
      * Constructs a new nondeterministic finite-state mealy transducer given a set of states, set of input elements,
@@ -45,6 +45,11 @@ public abstract class AbstractMealyNFST<S extends State, I, K, V, C, O> extends 
     public AbstractMealyNFST(Set<S> states, Set<I> inputElements, Map<K, V> transitions, S startState,
             Set<O> outputElements, Map<K, O> translations) {
         super(states, inputElements, transitions, startState, outputElements, translations);
+
+        // Ensure the translation map's key set is equal to the transition map's key set.
+        if (!translations.keySet().equals(transitions.keySet()))
+            throw new IllegalArgumentException("Cannot construct a nondeterministic finite-state mealy transducer whose"
+                    + "translation map's key set is not equal to its transition map's key set.");
     }
 
     @Override

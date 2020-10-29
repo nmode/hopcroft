@@ -21,7 +21,7 @@ import ca.nmode.hopcroft.states.State;
  *
  * @author Naeem Model
  */
-public abstract class AbstractMooreDFST<S extends State, I, K, V, C, O> extends AbstractMooreFST<S, I, K, V, O>
+public abstract class AbstractMooreDFST<S extends State, I, K, V, C, O> extends AbstractFST<S, I, K, V, O, S>
         implements MooreDFST<S, I, K, V, C, O> {
     /**
      * Constructs a new deterministic finite-state moore transducer given a set of states, set of input elements,
@@ -39,13 +39,17 @@ public abstract class AbstractMooreDFST<S extends State, I, K, V, C, O> extends 
      *                                  {@code inputElements} or {@code outputElements} contains {@code null}; or
      *                                  {@code transitions} contains {@code null} keys or values
      * @throws IllegalArgumentException if {@code states} is empty, {@code startState} is not in {@code states},
-     *                                  {@code translations} contains values that are not in {@code outputElements},
-     *                                  {@code outputElements} is empty, or {@code translations}' key set is not equal
-     *                                  to {@code states}
+     *                                  {@code translations} contains values that are not in {@code outputElements}, or
+     *                                  {@code translations}' key set is not equal to {@code states}
      */
     public AbstractMooreDFST(Set<S> states, Set<I> inputElements, Map<K, V> transitions, S startState,
             Set<O> outputElements, Map<S, O> translations) {
         super(states, inputElements, transitions, startState, outputElements, translations);
+
+        // Ensure the translation map's key set is equal to the set of states.
+        if (!translations.keySet().equals(states))
+            throw new IllegalArgumentException("Cannot construct a deterministic finite-state moore transducer whose "
+                    + "translation map's key set is not equal to its set of states.");
     }
 
     @Override
