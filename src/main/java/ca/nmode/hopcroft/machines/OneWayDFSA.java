@@ -4,11 +4,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Set;
 
 /**
- * A one-way {@link DeterministicFSA deterministic finite-state acceptor}. During a {@link #compute(List)
- * computation}, it reads the elements in an input sequentially, from left to right, and halts once a
+ * A one-way {@link DeterministicFSA deterministic finite-state acceptor}. During a {@link #compute(List) computation},
+ * it reads the elements in an input sequentially, from left to right, and halts once a
  * {@link DeterministicFSM#transitions() transition} on the last element is taken, provided it has not halted before
  * then.
  *
@@ -68,55 +69,45 @@ public class OneWayDFSA<S, I> extends AbstractDFSA<S, I, Entry<S, I>, S, List<En
     }
 
     /**
-     * Returns a one-way deterministic finite-state acceptor constructed from the specified deterministic finite-state
-     * machine's set of states, set of input elements, transition map and start state, with the specified set of accept
+     * Constructs a one-way deterministic finite-state acceptor with the specified deterministic finite-state machine's
+     * set of states, set of input elements, transition map and start state, as well as the specified set of accept
      * states.
      * 
-     * @param <S>          the type of the returned one-way deterministic finite-state acceptor's states
-     * @param <I>          the type of the returned one-way deterministic finite-state acceptor's input elements
      * @param d            the deterministic finite-state machine whose set of states, set of input elements, transition
-     *                     map and start state is used to construct the returned one-way deterministic finite-state
-     *                     machine
+     *                     map and start state is used to construct the new one-way deterministic finite-state acceptor
      * @param acceptStates the set of accept states of the new one-way deterministic finite-state acceptor
      * 
-     * @throws NullPointerException
-     * @throws IllegalArgumentException
-     * 
-     * @return a one-way deterministic finite-state acceptor constructed from the specified deterministic finite-state
-     *         machine's set of states, set of input elements, transition map and start state, with the specified set of
-     *         accept state
-     * 
-     * @see #OneWayDFSA(Set, Set, Map, State, Set)
+     * @throws NullPointerException     if {@code d} or {@code acceptStates} is {@code null}
+     * @throws IllegalArgumentException if {@code acceptStates} is not a subset of {@code d}'s states; the size of
+     *                                  {@code d}'s transition map is not equal to the product of its set of states' and
+     *                                  set of input elements' sizes; {@code d}'s transition map contains keys whose
+     *                                  state or element is not in its set of states and set of input elements,
+     *                                  respectively; or {@code d}'s transition map contains values that are not in its
+     *                                  set of states
      */
-    public static final <S, I> OneWayDFSA<S, I> from(DeterministicFSM<S, I, Entry<S, I>, S, ?> d, Set<S> acceptStates) {
-        // Ensure the specified deterministic finite-state machine is not null.
-        if (d == null)
-            throw new NullPointerException("Cannot construct a one-way deterministic finite-state acceptor from a null "
-                    + "deterministic finite-state machine.");
-        return new OneWayDFSA<>(d.states(), d.inputElements(), d.transitions(), d.startState(), acceptStates);
+    public OneWayDFSA(DeterministicFSM<S, I, Entry<S, I>, S, ?> d, Set<S> acceptStates) {
+        this(Objects.requireNonNull(d,
+                "Cannot construct a one-way deterministic finite-state acceptor from a null "
+                        + "deterministic finite-state machine.")
+                .states(), d.inputElements(), d.transitions(), d.startState(), acceptStates);
     }
 
     /**
-     * Returns a one-way deterministic finite-state acceptor constructed from the specified deterministic finite-state
-     * machine's set of states, set of input elements, transition map and start state, with an empty set of accept
-     * states.
+     * Constructs a one-way deterministic finite-state acceptor with the specified deterministic finite-state machine's
+     * set of states, set of input elements, transition map and start state, as well as an empty set of accept states.
      * 
-     * @param <S> the type of the returned one-way deterministic finite-state acceptor's states
-     * @param <I> the type of the returned one-way deterministic finite-state acceptor's input elements
-     * @param d   the deterministic finite-state machine whose set of states, set of input elements, transition map and
-     *            start state is used to construct the returned one-way deterministic finite-state machine
+     * @param d the deterministic finite-state machine whose set of states, set of input elements, transition map and
+     *          start state is used to construct the returned one-way deterministic finite-state acceptor
      * 
-     * @throws NullPointerException
-     * @throws IllegalArgumentException
-     * 
-     * @return a one-way deterministic finite-state acceptor constructed from the specified deterministic finite-state
-     *         machine's set of states, set of input elements, transition map and start state, with an empty set of
-     *         accept states
-     * 
-     * @see #OneWayDFSA(Set, Set, Map, State)
+     * @throws NullPointerException     if {@code d} is {@code null}
+     * @throws IllegalArgumentException if the size of {@code d}'s transition map is not equal to the product of its set
+     *                                  of states' and set of input elements' sizes; {@code d}'s transition map contains
+     *                                  keys whose state or element is not in its set of states and set of input
+     *                                  elements, respectively; or {@code d}'s transition map contains values that are
+     *                                  not in {@code states}
      */
-    public static final <S, I> OneWayDFSA<S, I> from(DeterministicFSM<S, I, Entry<S, I>, S, ?> d) {
-        return OneWayDFSA.from(d, Set.of());
+    public OneWayDFSA(DeterministicFSM<S, I, Entry<S, I>, S, ?> d) {
+        this(d, Set.of());
     }
 
     /**
