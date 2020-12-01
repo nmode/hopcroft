@@ -10,8 +10,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 /* A utility class used by the one-way deterministic finite-state machines in this package. */
-class OneWayDFSMUtility {
-    private OneWayDFSMUtility() {}
+class OneWayDFSMs {
+    private OneWayDFSMs() {}
 
     /* Verifies the transition maps of the one-way deterministic finite-state machines in this package. */
     static <S, I> void verifyTransitions(
