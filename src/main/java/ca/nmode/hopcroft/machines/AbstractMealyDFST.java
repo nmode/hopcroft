@@ -19,8 +19,11 @@ import java.util.Set;
  *
  * @author Naeem Model
  */
-public abstract class AbstractMealyDFST<S, I, K, V, C, O> extends AbstractFST<S, I, K, V, O, K>
+public abstract class AbstractMealyDFST<S, I, K, V, C, O> extends AbstractDFSM<S, I, K, V, C>
         implements MealyDFST<S, I, K, V, C, O> {
+    final Set<O> outputElements;
+    final Map<K, O> translations;
+
     /**
      * Constructs a new deterministic finite-state mealy transducer given a set of states, set of input elements,
      * transition map, start state, set of output elements and translation map.
@@ -42,32 +45,9 @@ public abstract class AbstractMealyDFST<S, I, K, V, C, O> extends AbstractFST<S,
      */
     public AbstractMealyDFST(Set<S> states, Set<I> inputElements, Map<K, V> transitions, S startState,
             Set<O> outputElements, Map<K, O> translations) {
-        super(states, inputElements, transitions, startState, outputElements, translations);
-
-        // Ensure the translation map's key set is equal to the transition map's key set.
-        if (!translations.keySet().equals(transitions.keySet()))
-            throw new IllegalArgumentException("Cannot construct a deterministic finite-state mealy transducer whose "
-                    + "translation map's key set is not equal to its transition map's key set.");
-    }
-
-    @Override
-    public final Set<S> states() {
-        return states;
-    }
-
-    @Override
-    public final Set<I> inputElements() {
-        return inputElements;
-    }
-
-    @Override
-    public final Map<K, V> transitions() {
-        return transitions;
-    }
-
-    @Override
-    public final S startState() {
-        return startState;
+        super(states, inputElements, transitions, startState);
+        this.outputElements = verifyOutputElements(outputElements);
+        this.translations = verifyTranslations(this, this.outputElements, translations);
     }
 
     @Override

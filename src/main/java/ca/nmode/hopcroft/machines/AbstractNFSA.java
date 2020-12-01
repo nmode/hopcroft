@@ -17,8 +17,10 @@ import java.util.Set;
  *
  * @author Naeem Model
  */
-public abstract class AbstractNFSA<S, I, K, V, C> extends AbstractFSA<S, I, K, V>
+public abstract class AbstractNFSA<S, I, K, V, C> extends AbstractNFSM<S, I, K, V, C>
         implements NondeterministicFSA<S, I, K, V, C> {
+    final Set<S> acceptStates;
+
     /**
      * Constructs a nondeterministic finite-state acceptor given a set of states, set of input elements, transition map,
      * start state and set of accept states.
@@ -37,27 +39,8 @@ public abstract class AbstractNFSA<S, I, K, V, C> extends AbstractFSA<S, I, K, V
      *                                  {@code acceptStates} is not a subset of {@code states}
      */
     public AbstractNFSA(Set<S> states, Set<I> inputElements, Map<K, V> transitions, S startState, Set<S> acceptStates) {
-        super(states, inputElements, transitions, startState, acceptStates);
-    }
-
-    @Override
-    public final Set<S> states() {
-        return states;
-    }
-
-    @Override
-    public final Set<I> inputElements() {
-        return inputElements;
-    }
-
-    @Override
-    public final Map<K, V> transitions() {
-        return transitions;
-    }
-
-    @Override
-    public final S startState() {
-        return startState;
+        super(states, inputElements, transitions, startState);
+        this.acceptStates = verifyAcceptStates(states, acceptStates);
     }
 
     @Override
