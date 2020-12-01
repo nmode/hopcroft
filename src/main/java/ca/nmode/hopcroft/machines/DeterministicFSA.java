@@ -5,7 +5,7 @@ import java.util.Set;
 
 /**
  * A deterministic finite-state acceptor. It is a {@link DeterministicFSM deterministic finite-state machine} which
- * {@link #accepts(List) accepts} an input if its {@link DeterministicFSM#computation(List) computation} ends in an
+ * {@link #accepts(List) accepts} an input if its {@link DeterministicFSM#compute(List) computation} ends in an
  * {@link #acceptStates() accept state}, and rejects otherwise.
  *
  * @param <S> the type of this deterministic finite-state acceptor's states
@@ -39,7 +39,7 @@ public interface DeterministicFSA<S, I, K, V, C> extends DeterministicFSM<S, I, 
      * @return {@code true} if the final state of this deterministic finite-state acceptor's computation on the
      *         specified input is in its set of accept states, {@code false} otherwise
      * 
-     * @see DeterministicFSM#computation(List)
+     * @see DeterministicFSM#compute(List)
      * @see #acceptStates()
      * @see DeterministicFSM#inputElements()
      */
@@ -57,7 +57,7 @@ public interface DeterministicFSA<S, I, K, V, C> extends DeterministicFSM<S, I, 
      *         {@code false} otherwise
      * 
      * @see DeterministicFSM#inputElements()
-     * @see DeterministicFSM#computation(List)
+     * @see DeterministicFSM#compute(List)
      * @see #accepts(List)
      */
     boolean recognizes(Set<List<I>> inputs);

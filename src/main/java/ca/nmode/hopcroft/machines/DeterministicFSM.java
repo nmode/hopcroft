@@ -8,7 +8,7 @@ import java.util.Set;
  * A deterministic finite-state machine. Beginning at its {@link #startState() start state} and on receiving a sequence
  * of {@link #inputElements() input elements}, the machine reads an element and {@link #transitions() transitions} to
  * any one of its {@link #states() states} in an alternating manner until some halting condition is met. This process is
- * known as its {@link #computation(List) computation} on the input. If an element for which there are no possible
+ * known as its {@link #compute(List) computation} on the input. If an element for which there are no possible
  * transitions from the machine's current state is read, it ends up in a {@code null} state and the computation halts.
  *
  * @param <S> the type of this deterministic finite-state machine's states
@@ -69,7 +69,7 @@ public interface DeterministicFSM<S, I, K, V, C>
      * 
      * @see #inputElements()
      */
-    C computation(List<I> input);
+    C compute(List<I> input);
 
     /**
      * Returns the final state of this deterministic finite-state machine's computation on the specified input.
@@ -82,7 +82,7 @@ public interface DeterministicFSM<S, I, K, V, C>
      * 
      * @see DeterministicFSM#states()
      * @see DeterministicFSM#inputElements()
-     * @see DeterministicFSM#computation(List)
+     * @see DeterministicFSM#compute(List)
      */
-    S classification(List<I> input);
+    S classify(List<I> input);
 }

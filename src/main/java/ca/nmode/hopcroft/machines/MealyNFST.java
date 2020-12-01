@@ -7,9 +7,9 @@ import java.util.Set;
 /**
  * A nondeterministic finite-state mealy transducer. It is a {@link NondeterministicFSM nondeterministic finite-state
  * machine} which {@link #translations() translates} each undergone {@link NondeterministicFSM#transitions() transition}
- * in every branch of the {@link NondeterministicFSM#computation(List) computation} of an input to an
+ * in every branch of the {@link NondeterministicFSM#compute(List) computation} of an input to an
  * {@link #outputElements() output element}. The process which yields the corresponding output sequence for each branch
- * is known as its {@link #transduction(List) transduction} on the input.
+ * is known as its {@link #transduce(List) transduction} on the input.
  * 
  * @param <S> the type of this nondeterministic finite-state mealy transducer's states
  * @param <I> the type of this nondeterministic finite-state mealy transducer's input elements
@@ -53,8 +53,8 @@ public interface MealyNFST<S, I, K, V, C, O> extends NondeterministicFSM<S, I, K
      * @return this nondeterministic finite-state mealy transducer's transduction on the specified input
      *
      * @see NondeterministicFSM#inputElements()
-     * @see NondeterministicFSM#computation(List)
+     * @see NondeterministicFSM#compute(List)
      * @see #translations()
      */
-    Set<List<O>> transduction(List<I> input);
+    Set<List<O>> transduce(List<I> input);
 }

@@ -39,7 +39,7 @@ class OneWayDFSMUtility {
     }
 
     /* Computes the one-way deterministic finite-state machines in this package. */
-    static <S, I> List<Entry<Entry<S, I>, S>> computation(
+    static <S, I> List<Entry<Entry<S, I>, S>> compute(
             DeterministicFSM<S, I, Entry<S, I>, S, List<Entry<Entry<S, I>, S>>> oneWayDFSM, List<I> input) {
         // Ensure the input is not null.
         if (input == null)
@@ -67,10 +67,10 @@ class OneWayDFSMUtility {
     }
 
     /* Classifies inputs for the one-way deterministic finite-state machines in this package. */
-    static <S, I> S classification(DeterministicFSM<S, I, Entry<S, I>, S, List<Entry<Entry<S, I>, S>>> oneWayDFSM,
+    static <S, I> S classify(DeterministicFSM<S, I, Entry<S, I>, S, List<Entry<Entry<S, I>, S>>> oneWayDFSM,
             List<I> input) {
         // Return the final state of the computation.
-        List<Entry<Entry<S, I>, S>> computation = computation(oneWayDFSM, input);
+        List<Entry<Entry<S, I>, S>> computation = compute(oneWayDFSM, input);
         return computation.get(computation.size() - 1).getValue();
     }
 

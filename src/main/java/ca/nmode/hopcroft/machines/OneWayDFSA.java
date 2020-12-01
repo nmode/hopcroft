@@ -7,7 +7,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 /**
- * A one-way {@link DeterministicFSA deterministic finite-state acceptor}. During a {@link #computation(List)
+ * A one-way {@link DeterministicFSA deterministic finite-state acceptor}. During a {@link #compute(List)
  * computation}, it reads the elements in an input sequentially, from left to right, and halts once a
  * {@link DeterministicFSM#transitions() transition} on the last element is taken, provided it has not halted before
  * then.
@@ -132,8 +132,8 @@ public class OneWayDFSA<S, I> extends AbstractDFSA<S, I, Entry<S, I>, S, List<En
      * @throws NullPointerException {@inheritDoc}
      */
     @Override
-    public final List<Entry<Entry<S, I>, S>> computation(List<I> input) {
-        return OneWayDFSMUtility.computation(this, input);
+    public final List<Entry<Entry<S, I>, S>> compute(List<I> input) {
+        return OneWayDFSMUtility.compute(this, input);
     }
 
     /**
@@ -142,8 +142,8 @@ public class OneWayDFSA<S, I> extends AbstractDFSA<S, I, Entry<S, I>, S, List<En
      * @throws NullPointerException {@inheritDoc}
      */
     @Override
-    public final S classification(List<I> input) {
-        return OneWayDFSMUtility.classification(this, input);
+    public final S classify(List<I> input) {
+        return OneWayDFSMUtility.classify(this, input);
     }
 
     /**
@@ -153,7 +153,7 @@ public class OneWayDFSA<S, I> extends AbstractDFSA<S, I, Entry<S, I>, S, List<En
      */
     @Override
     public final boolean accepts(List<I> input) {
-        List<Entry<Entry<S, I>, S>> computation = computation(input);
+        List<Entry<Entry<S, I>, S>> computation = compute(input);
         return acceptStates.contains(computation.get(computation.size() - 1).getValue());
     }
 

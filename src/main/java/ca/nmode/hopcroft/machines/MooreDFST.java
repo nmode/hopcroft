@@ -6,9 +6,9 @@ import java.util.Set;
 
 /**
  * A deterministic finite-state moore transducer. It is a {@link DeterministicFSM deterministic finite-state machine}
- * which {@link #translations() translates} each visited state in the {@link DeterministicFSM#computation(List)
- * computation} of an input to an {@link #outputElements() output element}. The process which yields the corresponding
- * output sequence is known as its {@link #transduction(List) transduction} on the input.
+ * which {@link #translations() translates} each visited state in the {@link DeterministicFSM#compute(List) computation}
+ * of an input to an {@link #outputElements() output element}. The process which yields the corresponding output
+ * sequence is known as its {@link #transduce(List) transduction} on the input.
  * 
  * @param <S> the type of this deterministic finite-state moore transducer's states
  * @param <I> the type of this deterministic finite-state moore transducer's input elements
@@ -52,8 +52,8 @@ public interface MooreDFST<S, I, K, V, C, O> extends DeterministicFSM<S, I, K, V
      * @return this deterministic finite-state moore transducer's transduction on the specified input
      *
      * @see DeterministicFSM#inputElements()
-     * @see DeterministicFSM#computation(List)
+     * @see DeterministicFSM#compute(List)
      * @see #translations()
      */
-    List<O> transduction(List<I> input);
+    List<O> transduce(List<I> input);
 }

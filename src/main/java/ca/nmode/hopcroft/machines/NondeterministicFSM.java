@@ -8,7 +8,7 @@ import java.util.Set;
  * A nondeterministic finite-state machine. Beginning at its {@link #startState() start state} and on receiving a
  * sequence of {@link #inputElements() input elements}, the machine optionally reads any number of elements and
  * {@link #transitions() transitions} to none or multiple of its {@link #states() states} until some halting condition
- * is met. This process is known as its {@link #computation(List) computation} on the input. When none or more than one
+ * is met. This process is known as its {@link #compute(List) computation} on the input. When none or more than one
  * transitions are made, the computation <i>branches</i> into a parallel computation. On a given branch, if an element
  * for which there are no possible transitions from the machine's current state is read, the branch ends up in a
  * {@code null} state and halts. The entire computation halts if every branch halts.
@@ -71,7 +71,7 @@ public interface NondeterministicFSM<S, I, K, V, C>
      * 
      * @see #inputElements()
      */
-    C computation(List<I> input);
+    C compute(List<I> input);
 
     /**
      * Returns a set containing the final state of every branch of this nondeterministic finite-state machine's
@@ -86,7 +86,7 @@ public interface NondeterministicFSM<S, I, K, V, C>
      * 
      * @see NondeterministicFSM#states()
      * @see NondeterministicFSM#inputElements()
-     * @see NondeterministicFSM#computation(List)
+     * @see NondeterministicFSM#compute(List)
      */
-    Set<S> classification(List<I> input);
+    Set<S> classify(List<I> input);
 }
