@@ -9,14 +9,12 @@ import java.util.ArrayDeque;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import ca.nmode.hopcroft.states.State;
-
 /* A utility class used by the one-way deterministic finite-state machines in this package. */
 class OneWayDFSMUtility {
     private OneWayDFSMUtility() {}
 
     /* Verifies the transition maps of the one-way deterministic finite-state machines in this package. */
-    static <S extends State, I> void verifyTransitions(
+    static <S, I> void verifyTransitions(
             DeterministicFSM<S, I, Entry<S, I>, S, List<Entry<Entry<S, I>, S>>> oneWayDFSM) {
         // Ensure the machine has a transition for every state-element pair.
         if (oneWayDFSM.transitions().size() != oneWayDFSM.states().size() * oneWayDFSM.inputElements().size())
@@ -41,7 +39,7 @@ class OneWayDFSMUtility {
     }
 
     /* Computes the one-way deterministic finite-state machines in this package. */
-    static <S extends State, I> List<Entry<Entry<S, I>, S>> computation(
+    static <S, I> List<Entry<Entry<S, I>, S>> computation(
             DeterministicFSM<S, I, Entry<S, I>, S, List<Entry<Entry<S, I>, S>>> oneWayDFSM, List<I> input) {
         // Ensure the input is not null.
         if (input == null)
@@ -69,15 +67,15 @@ class OneWayDFSMUtility {
     }
 
     /* Classifies inputs for the one-way deterministic finite-state machines in this package. */
-    static <S extends State, I> S classification(
-            DeterministicFSM<S, I, Entry<S, I>, S, List<Entry<Entry<S, I>, S>>> oneWayDFSM, List<I> input) {
+    static <S, I> S classification(DeterministicFSM<S, I, Entry<S, I>, S, List<Entry<Entry<S, I>, S>>> oneWayDFSM,
+            List<I> input) {
         // Return the final state of the computation.
         List<Entry<Entry<S, I>, S>> computation = computation(oneWayDFSM, input);
         return computation.get(computation.size() - 1).getValue();
     }
 
     /* Retrieves the reachable states of the one-way deterministic finite-state machines in this package. */
-    static <S extends State, I> Set<S> reachableStates(
+    static <S, I> Set<S> reachableStates(
             DeterministicFSM<S, I, Entry<S, I>, S, List<Entry<Entry<S, I>, S>>> oneWayDFSM) {
         Set<S> reachableStates = new HashSet<>();
         // Add the start state to the set of reachable states and add it to the visitation queue.

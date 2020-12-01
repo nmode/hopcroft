@@ -3,8 +3,6 @@ package ca.nmode.hopcroft.machines;
 import java.util.Map;
 import java.util.Set;
 
-import ca.nmode.hopcroft.states.State;
-
 /**
  * A skeletal implementation of a {@link MealyDFST deterministic finite-state mealy transducer}. Extending classes need
  * not validate the set of {@link #states() states}, set of {@link #inputElements() input elements},
@@ -21,7 +19,7 @@ import ca.nmode.hopcroft.states.State;
  *
  * @author Naeem Model
  */
-public abstract class AbstractMealyDFST<S extends State, I, K, V, C, O> extends AbstractFST<S, I, K, V, O, K>
+public abstract class AbstractMealyDFST<S, I, K, V, C, O> extends AbstractFST<S, I, K, V, O, K>
         implements MealyDFST<S, I, K, V, C, O> {
     /**
      * Constructs a new deterministic finite-state mealy transducer given a set of states, set of input elements,

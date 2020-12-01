@@ -6,8 +6,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import ca.nmode.hopcroft.states.State;
-
 /**
  * A one-way {@link DeterministicFSA deterministic finite-state acceptor}. During a {@link #computation(List)
  * computation}, it reads the elements in an input sequentially, from left to right, and halts once a
@@ -19,7 +17,7 @@ import ca.nmode.hopcroft.states.State;
  *
  * @author Naeem Model
  */
-public class OneWayDFSA<S extends State, I> extends AbstractDFSA<S, I, Entry<S, I>, S, List<Entry<Entry<S, I>, S>>> {
+public class OneWayDFSA<S, I> extends AbstractDFSA<S, I, Entry<S, I>, S, List<Entry<Entry<S, I>, S>>> {
     /**
      * Constructs a one-way deterministic finite-state acceptor given a set of states, set of input elements, transition
      * map, start state and set of accept states.
@@ -90,8 +88,7 @@ public class OneWayDFSA<S extends State, I> extends AbstractDFSA<S, I, Entry<S, 
      * 
      * @see #OneWayDFSA(Set, Set, Map, State, Set)
      */
-    public static final <S extends State, I> OneWayDFSA<S, I> from(DeterministicFSM<S, I, Entry<S, I>, S, ?> d,
-            Set<S> acceptStates) {
+    public static final <S, I> OneWayDFSA<S, I> from(DeterministicFSM<S, I, Entry<S, I>, S, ?> d, Set<S> acceptStates) {
         // Ensure the specified deterministic finite-state machine is not null.
         if (d == null)
             throw new NullPointerException("Cannot construct a one-way deterministic finite-state acceptor from a null "
@@ -118,7 +115,7 @@ public class OneWayDFSA<S extends State, I> extends AbstractDFSA<S, I, Entry<S, 
      * 
      * @see #OneWayDFSA(Set, Set, Map, State)
      */
-    public static final <S extends State, I> OneWayDFSA<S, I> from(DeterministicFSM<S, I, Entry<S, I>, S, ?> d) {
+    public static final <S, I> OneWayDFSA<S, I> from(DeterministicFSM<S, I, Entry<S, I>, S, ?> d) {
         return OneWayDFSA.from(d, Set.of());
     }
 

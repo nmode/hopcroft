@@ -3,12 +3,10 @@ package ca.nmode.hopcroft.machines;
 import java.util.List;
 import java.util.Set;
 
-import ca.nmode.hopcroft.states.State;
-
 /**
- * A deterministic finite-{@link State state} acceptor. It is a {@link DeterministicFSM deterministic finite-state
- * machine} which {@link #accepts(List) accepts} an input if its {@link DeterministicFSM#computation(List) computation}
- * ends in an {@link #acceptStates() accept state}, and rejects otherwise.
+ * A deterministic finite-state acceptor. It is a {@link DeterministicFSM deterministic finite-state machine} which
+ * {@link #accepts(List) accepts} an input if its {@link DeterministicFSM#computation(List) computation} ends in an
+ * {@link #acceptStates() accept state}, and rejects otherwise.
  *
  * @param <S> the type of this deterministic finite-state acceptor's states
  * @param <I> the type of this deterministic finite-state acceptor's input elements
@@ -18,7 +16,7 @@ import ca.nmode.hopcroft.states.State;
  * 
  * @author Naeem Model
  */
-public interface DeterministicFSA<S extends State, I, K, V, C> extends DeterministicFSM<S, I, K, V, C> {
+public interface DeterministicFSA<S, I, K, V, C> extends DeterministicFSM<S, I, K, V, C> {
     /**
      * Returns this deterministic finite-state acceptor's unmodifiable set of accept states. The returned set is a
      * subset of this deterministic finite-state acceptor's set of states, and attempts to modify it result in an

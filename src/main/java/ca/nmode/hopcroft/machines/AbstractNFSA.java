@@ -3,8 +3,6 @@ package ca.nmode.hopcroft.machines;
 import java.util.Map;
 import java.util.Set;
 
-import ca.nmode.hopcroft.states.State;
-
 /**
  * A skeletal implementation of a {@link NondeterministicFSA nondeterministic finite-state acceptor}. Extending classes
  * need not validate the set of {@link #states() states}, set of {@link #inputElements() input elements},
@@ -19,7 +17,7 @@ import ca.nmode.hopcroft.states.State;
  *
  * @author Naeem Model
  */
-public abstract class AbstractNFSA<S extends State, I, K, V, C> extends AbstractFSA<S, I, K, V>
+public abstract class AbstractNFSA<S, I, K, V, C> extends AbstractFSA<S, I, K, V>
         implements NondeterministicFSA<S, I, K, V, C> {
     /**
      * Constructs a nondeterministic finite-state acceptor given a set of states, set of input elements, transition map,

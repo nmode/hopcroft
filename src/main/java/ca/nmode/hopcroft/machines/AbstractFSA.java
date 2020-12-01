@@ -5,10 +5,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import ca.nmode.hopcroft.states.State;
-
 /* A skeletal implementation of a finite-state acceptor. */
-abstract class AbstractFSA<S extends State, I, K, V> extends AbstractFSM<S, I, K, V> {
+abstract class AbstractFSA<S, I, K, V> extends AbstractFSM<S, I, K, V> {
     final Set<S> acceptStates;
 
     AbstractFSA(Set<S> states, Set<I> inputElements, Map<K, V> transitions, S startState, Set<S> acceptStates) {

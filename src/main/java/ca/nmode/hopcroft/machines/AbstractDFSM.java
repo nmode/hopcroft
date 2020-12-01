@@ -3,8 +3,6 @@ package ca.nmode.hopcroft.machines;
 import java.util.Map;
 import java.util.Set;
 
-import ca.nmode.hopcroft.states.State;
-
 /**
  * A skeletal implementation of a {@link DeterministicFSM deterministic finite-state machine}. Extending classes need
  * not validate the set of {@link #states() states}, set of {@link #inputElements() input elements} and
@@ -19,7 +17,7 @@ import ca.nmode.hopcroft.states.State;
  *
  * @author Naeem Model
  */
-public abstract class AbstractDFSM<S extends State, I, K, V, C> extends AbstractFSM<S, I, K, V>
+public abstract class AbstractDFSM<S, I, K, V, C> extends AbstractFSM<S, I, K, V>
         implements DeterministicFSM<S, I, K, V, C> {
     /**
      * Constructs a deterministic finite-state machine given a set of states, set of input elements, transition map and

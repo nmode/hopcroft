@@ -4,11 +4,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import ca.nmode.hopcroft.states.State;
-
 /**
- * A nondeterministic finite-{@link State state} moore transducer. It is a {@link NondeterministicFSM nondeterministic
- * finite-state machine} which {@link #translations() translates} each visited state in every branch the
+ * A nondeterministic finite-state moore transducer. It is a {@link NondeterministicFSM nondeterministic finite-state
+ * machine} which {@link #translations() translates} each visited state in every branch the
  * {@link NondeterministicFSM#computation(List) computation} of an input to an {@link #outputElements() output element}.
  * The process which yields the corresponding output sequence for each branch is known as its {@link #transduction(List)
  * transduction} on the input.
@@ -22,7 +20,7 @@ import ca.nmode.hopcroft.states.State;
  *
  * @author Naeem Model
  */
-public interface MooreNFST<S extends State, I, K, V, C, O> extends NondeterministicFSM<S, I, K, V, C> {
+public interface MooreNFST<S, I, K, V, C, O> extends NondeterministicFSM<S, I, K, V, C> {
     /**
      * Returns this nondeterministic finite-state moore transducer's unmodifiable set of output elements. The returned
      * set neither is nor contains {@code null}, is non-empty, and attempts to modify it result in an

@@ -4,15 +4,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import ca.nmode.hopcroft.states.State;;
-
 /**
- * A deterministic finite-{@link State state} machine. Beginning at its {@link #startState() start state} and on
- * receiving a sequence of {@link #inputElements() input elements}, the machine reads an element and
- * {@link #transitions() transitions} to any one of its {@link #states() states} in an alternating manner until some
- * halting condition is met. This process is known as its {@link #computation(List) computation} on the input. If an
- * element for which there are no possible transitions from the machine's current state is read, it ends up in a
- * {@code null} state and the computation halts.
+ * A deterministic finite-state machine. Beginning at its {@link #startState() start state} and on receiving a sequence
+ * of {@link #inputElements() input elements}, the machine reads an element and {@link #transitions() transitions} to
+ * any one of its {@link #states() states} in an alternating manner until some halting condition is met. This process is
+ * known as its {@link #computation(List) computation} on the input. If an element for which there are no possible
+ * transitions from the machine's current state is read, it ends up in a {@code null} state and the computation halts.
  *
  * @param <S> the type of this deterministic finite-state machine's states
  * @param <I> the type of this deterministic finite-state machine's input elements
@@ -22,7 +19,7 @@ import ca.nmode.hopcroft.states.State;;
  * 
  * @author Naeem Model
  */
-public interface DeterministicFSM<S extends State, I, K, V, C>
+public interface DeterministicFSM<S, I, K, V, C>
         extends FiniteStateMachine<S, I, K, V, C, DeterministicFSM<S, I, K, V, C>> {
     /**
      * Returns this deterministic finite-state machine's unmodifiable set of states. The returned set neither is nor

@@ -4,14 +4,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import ca.nmode.hopcroft.states.State;
-
 /**
- * A deterministic finite-{@link State state} moore transducer. It is a {@link DeterministicFSM deterministic
- * finite-state machine} which {@link #translations() translates} each visited state in the
- * {@link DeterministicFSM#computation(List) computation} of an input to an {@link #outputElements() output element}.
- * The process which yields the corresponding output sequence is known as its {@link #transduction(List) transduction}
- * on the input.
+ * A deterministic finite-state moore transducer. It is a {@link DeterministicFSM deterministic finite-state machine}
+ * which {@link #translations() translates} each visited state in the {@link DeterministicFSM#computation(List)
+ * computation} of an input to an {@link #outputElements() output element}. The process which yields the corresponding
+ * output sequence is known as its {@link #transduction(List) transduction} on the input.
  * 
  * @param <S> the type of this deterministic finite-state moore transducer's states
  * @param <I> the type of this deterministic finite-state moore transducer's input elements
@@ -22,7 +19,7 @@ import ca.nmode.hopcroft.states.State;
  *
  * @author Naeem Model
  */
-public interface MooreDFST<S extends State, I, K, V, C, O> extends DeterministicFSM<S, I, K, V, C> {
+public interface MooreDFST<S, I, K, V, C, O> extends DeterministicFSM<S, I, K, V, C> {
     /**
      * Returns this deterministic finite-state moore transducer's unmodifiable set of output elements. The returned set
      * neither is nor contains {@code null}, is non-empty, and attempts to modify it result in an

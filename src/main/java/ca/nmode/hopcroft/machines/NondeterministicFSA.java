@@ -3,13 +3,10 @@ package ca.nmode.hopcroft.machines;
 import java.util.List;
 import java.util.Set;
 
-import ca.nmode.hopcroft.states.State;
-
 /**
- * A nondeterministic finite-{@link State state} acceptor. It is a {@link NondeterministicFSM nondeterministic
- * finite-state machine} which {@link #accepts(List) accepts} an input if any branch of its
- * {@link NondeterministicFSM#computation(List) computation} ends in an {@link #acceptStates() accept state}, and
- * rejects otherwise.
+ * A nondeterministic finite-state acceptor. It is a {@link NondeterministicFSM nondeterministic finite-state machine}
+ * which {@link #accepts(List) accepts} an input if any branch of its {@link NondeterministicFSM#computation(List)
+ * computation} ends in an {@link #acceptStates() accept state}, and rejects otherwise.
  *
  * @param <S> the type of this nondeterministic finite-state acceptor's states
  * @param <I> the type of this nondeterministic finite-state acceptor's input elements
@@ -19,7 +16,7 @@ import ca.nmode.hopcroft.states.State;
  * 
  * @author Naeem Model
  */
-public interface NondeterministicFSA<S extends State, I, K, V, C> extends NondeterministicFSM<S, I, K, V, C> {
+public interface NondeterministicFSA<S, I, K, V, C> extends NondeterministicFSM<S, I, K, V, C> {
     /**
      * Returns this nondeterministic finite-state acceptor's unmodifiable set of accept states. The returned set is a
      * subset of this nondeterministic finite-state acceptor's set of states, and attempts to modify it result in an

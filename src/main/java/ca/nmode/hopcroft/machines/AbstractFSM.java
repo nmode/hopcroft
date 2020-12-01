@@ -6,10 +6,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import ca.nmode.hopcroft.states.State;
-
 /* A skeletal implementation of a finite-state machine. */
-abstract class AbstractFSM<S extends State, I, K, V> {
+abstract class AbstractFSM<S, I, K, V> {
     final Set<S> states;
     final Set<I> inputElements;
     final Map<K, V> transitions;

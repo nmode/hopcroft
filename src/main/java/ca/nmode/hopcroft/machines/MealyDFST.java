@@ -4,14 +4,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import ca.nmode.hopcroft.states.State;
-
 /**
- * A deterministic finite-{@link State state} mealy transducer. It is a {@link DeterministicFSM deterministic
- * finite-state machine} which {@link #translations() translates} each undergone {@link DeterministicFSM#transitions()
- * transition} in the {@link DeterministicFSM#computation(List) computation} of an input to an {@link #outputElements()
- * output element}. The process which yields the corresponding output sequence is known as its
- * {@link #transduction(List) transduction} on the input.
+ * A deterministic finite-state mealy transducer. It is a {@link DeterministicFSM deterministic finite-state machine}
+ * which {@link #translations() translates} each undergone {@link DeterministicFSM#transitions() transition} in the
+ * {@link DeterministicFSM#computation(List) computation} of an input to an {@link #outputElements() output element}.
+ * The process which yields the corresponding output sequence is known as its {@link #transduction(List) transduction}
+ * on the input.
  * 
  * @param <S> the type of this deterministic finite-state mealy transducer's states
  * @param <I> the type of this deterministic finite-state mealy transducer's input elements
@@ -22,7 +20,7 @@ import ca.nmode.hopcroft.states.State;
  *
  * @author Naeem Model
  */
-public interface MealyDFST<S extends State, I, K, V, C, O> extends DeterministicFSM<S, I, K, V, C> {
+public interface MealyDFST<S, I, K, V, C, O> extends DeterministicFSM<S, I, K, V, C> {
     /**
      * Returns this deterministic finite-state mealy transducer's unmodifiable set of output elements. The returned set
      * neither is nor contains {@code null}, and attempts to modify it result in an
