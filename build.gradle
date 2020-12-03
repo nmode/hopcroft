@@ -19,6 +19,9 @@ dependencies {
     // Use the JUnit Jupiter (v5.7.0) testing framework.
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+
+    // Use JGraphT (v1.5.0) to represent state machines and their computations as graphs.
+    api 'org.jgrapht:jgrapht-core:1.5.0'
 }
 
 publishing {
@@ -47,7 +50,7 @@ publishing {
             pom {
                 // Set the project name and description.
                 name = 'Hopcroft'
-                description = 'A library for finite-state machines.'
+                description = 'Library for finite-state machines.'
                 // Distribute the project under the GPLv3.
                 licenses {
                     license {
