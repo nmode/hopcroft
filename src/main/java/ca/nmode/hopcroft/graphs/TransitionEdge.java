@@ -5,7 +5,7 @@ import java.util.Objects;
 import org.jgrapht.graph.DefaultEdge;
 
 /**
- * An labeled edge of a {@link StateDiagram state diagram}. It represents a finite-state machine's transition, where the
+ * A labeled edge of a {@link StateDiagram state diagram}. It represents a finite-state machine's transition, where the
  * source and target {@link StateVertex vertices} correspond to the state before and after the transition, respectively,
  * with its label corresponding to additional inputs or outputs.
  * 
@@ -35,7 +35,7 @@ public final class TransitionEdge<L> extends DefaultEdge {
         return label;
     }
 
-    /* Returns an instance of this class parametrized with the label type. */
+    /* Returns a class instance parametrized with the label type. */
     @SuppressWarnings("unchecked")
     static <T> Class<T> generified() {
         return (Class<T>) TransitionEdge.class;
@@ -50,8 +50,8 @@ public final class TransitionEdge<L> extends DefaultEdge {
     @Override
     public boolean equals(Object obj) {
         return this == obj || obj instanceof TransitionEdge<?> && Objects.equals(label, ((TransitionEdge<?>) obj).label)
-                && Objects.equals(getSource(), ((TransitionEdge<?>) obj).getSource())
-                && Objects.equals(getTarget(), ((TransitionEdge<?>) obj).getTarget());
+                && getSource() == ((TransitionEdge<?>) obj).getSource()
+                && getTarget() == ((TransitionEdge<?>) obj).getTarget();
     }
 
     /**
