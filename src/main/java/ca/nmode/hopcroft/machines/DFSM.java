@@ -19,8 +19,7 @@ import java.util.Set;
  * 
  * @author Naeem Model
  */
-public interface DeterministicFSM<S, I, K, V, C>
-        extends FiniteStateMachine<S, I, K, V, C, DeterministicFSM<S, I, K, V, C>> {
+public interface DFSM<S, I, K, V, C> extends FSM<S, I, K, V, C, DFSM<S, I, K, V, C>> {
     /**
      * Returns this deterministic finite-state machine's unmodifiable set of states. The returned set neither is nor
      * contains {@code null}, is non-empty, and attempts to modify it result in an
@@ -58,8 +57,8 @@ public interface DeterministicFSM<S, I, K, V, C>
     S startState();
 
     /**
-     * Returns this deterministic finite-state machine's {@link DeterministicFSM computation} on the specified input.
-     * The returned computation is not {@code null}.
+     * Returns this deterministic finite-state machine's {@link DFSM computation} on the specified input. The returned
+     * computation is not {@code null}.
      * 
      * @param input the sequence of elements to compute this deterministic finite-state machine on
      * 
@@ -80,9 +79,9 @@ public interface DeterministicFSM<S, I, K, V, C>
      * 
      * @return the final state of this deterministic finite-state machine's computation on the specified input
      * 
-     * @see DeterministicFSM#states()
-     * @see DeterministicFSM#inputElements()
-     * @see DeterministicFSM#compute(List)
+     * @see DFSM#states()
+     * @see DFSM#inputElements()
+     * @see DFSM#compute(List)
      */
     S classify(List<I> input);
 }

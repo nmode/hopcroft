@@ -8,10 +8,9 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * A one-way {@link DeterministicFSA deterministic finite-state acceptor}. During a {@link #compute(List) computation},
- * it reads the elements in an input sequentially, from left to right, and halts once a
- * {@link DeterministicFSM#transitions() transition} on the last element is taken, provided it has not halted before
- * then.
+ * A one-way {@link DFSA deterministic finite-state acceptor}. During a {@link #compute(List) computation}, it reads the
+ * elements in an input sequentially, from left to right, and halts once a {@link DFSM#transitions() transition} on the
+ * last element is taken, provided it has not halted before then.
  *
  * @param <S> the type of this one-way deterministic finite-state acceptor's states
  * @param <I> the type of this one-way deterministic finite-state acceptor's input elements
@@ -85,7 +84,7 @@ public class OneWayDFSA<S, I> extends AbstractDFSA<S, I, Entry<S, I>, S, List<En
      *                                  respectively; or {@code d}'s transition map contains values that are not in its
      *                                  set of states
      */
-    public OneWayDFSA(DeterministicFSM<S, I, Entry<S, I>, S, ?> d, Set<S> acceptStates) {
+    public OneWayDFSA(DFSM<S, I, Entry<S, I>, S, ?> d, Set<S> acceptStates) {
         this(Objects.requireNonNull(d,
                 "Cannot construct a one-way deterministic finite-state acceptor from a null "
                         + "deterministic finite-state machine.")
@@ -106,7 +105,7 @@ public class OneWayDFSA<S, I> extends AbstractDFSA<S, I, Entry<S, I>, S, List<En
      *                                  elements, respectively; or {@code d}'s transition map contains values that are
      *                                  not in {@code states}
      */
-    public OneWayDFSA(DeterministicFSM<S, I, Entry<S, I>, S, ?> d) {
+    public OneWayDFSA(DFSM<S, I, Entry<S, I>, S, ?> d) {
         this(d, Set.of());
     }
 
@@ -116,9 +115,9 @@ public class OneWayDFSA<S, I> extends AbstractDFSA<S, I, Entry<S, I>, S, List<En
      * The computation is described by a list of entries. An entry at index {@code i} represents step {@code i} of the
      * computation, where the key is itself an entry of the current state and element read, and the value is the
      * resulting state. In other words, each entry is a transition undergone in the computation. The entry at index
-     * {@code 0} consists of the {@link DeterministicFSM#startState() start state} and {@code null} as its entry key,
-     * and the start state as its value, which is interpreted as the machine beginning and staying at the start state on
-     * reading no element (i.e., before reading any element in the input).
+     * {@code 0} consists of the {@link DFSM#startState() start state} and {@code null} as its entry key, and the start
+     * state as its value, which is interpreted as the machine beginning and staying at the start state on reading no
+     * element (i.e., before reading any element in the input).
      * 
      * @throws NullPointerException {@inheritDoc}
      */
@@ -181,9 +180,9 @@ public class OneWayDFSA<S, I> extends AbstractDFSA<S, I, Entry<S, I>, S, List<En
      * 
      * @return this one-way deterministic finite-state acceptor's set of reachable states
      * 
-     * @see DeterministicFSM#states()
-     * @see DeterministicFSM#transitions()
-     * @see DeterministicFSM#startState()
+     * @see DFSM#states()
+     * @see DFSM#transitions()
+     * @see DFSM#startState()
      */
     public final Set<S> reachableStates() {
         return OneWayDFSMs.reachableStates(this);

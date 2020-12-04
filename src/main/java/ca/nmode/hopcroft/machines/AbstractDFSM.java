@@ -4,10 +4,10 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * A skeletal implementation of a {@link DeterministicFSM deterministic finite-state machine}. Extending classes need
- * not validate the set of {@link #states() states}, set of {@link #inputElements() input elements} and
- * {@link #startState() start state}. It is ensured that the {@link #transitions() transition map} neither is nor
- * contains keys or values that are {@code null}.
+ * A skeletal implementation of a {@link DFSM deterministic finite-state machine}. Extending classes need not validate
+ * the set of {@link #states() states}, set of {@link #inputElements() input elements} and {@link #startState() start
+ * state}. It is ensured that the {@link #transitions() transition map} neither is nor contains keys or values that are
+ * {@code null}.
  * 
  * @param <S> the type of this deterministic finite-state machine's states
  * @param <I> the type of this deterministic finite-state machine's input elements
@@ -17,8 +17,7 @@ import java.util.Set;
  *
  * @author Naeem Model
  */
-public abstract class AbstractDFSM<S, I, K, V, C> extends AbstractFSM<S, I, K, V>
-        implements DeterministicFSM<S, I, K, V, C> {
+public abstract class AbstractDFSM<S, I, K, V, C> extends AbstractFSM<S, I, K, V> implements DFSM<S, I, K, V, C> {
     /**
      * Constructs a deterministic finite-state machine given a set of states, set of input elements, transition map and
      * start state.

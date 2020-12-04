@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * A deterministic finite-state acceptor. It is a {@link DeterministicFSM deterministic finite-state machine} which
- * {@link #accepts(List) accepts} an input if its {@link DeterministicFSM#compute(List) computation} ends in an
+ * A deterministic finite-state acceptor. It is a {@link DFSM deterministic finite-state machine} which
+ * {@link #accepts(List) accepts} an input if its {@link DFSM#compute(List) computation} ends in an
  * {@link #acceptStates() accept state}, and rejects otherwise.
  *
  * @param <S> the type of this deterministic finite-state acceptor's states
@@ -16,7 +16,7 @@ import java.util.Set;
  * 
  * @author Naeem Model
  */
-public interface DeterministicFSA<S, I, K, V, C> extends DeterministicFSM<S, I, K, V, C> {
+public interface DFSA<S, I, K, V, C> extends DFSM<S, I, K, V, C> {
     /**
      * Returns this deterministic finite-state acceptor's unmodifiable set of accept states. The returned set is a
      * subset of this deterministic finite-state acceptor's set of states, and attempts to modify it result in an
@@ -24,7 +24,7 @@ public interface DeterministicFSA<S, I, K, V, C> extends DeterministicFSM<S, I, 
      * 
      * @return this deterministic finite-state acceptor's unmodifiable set of accept states
      * 
-     * @see DeterministicFSM#states()
+     * @see DFSM#states()
      */
     Set<S> acceptStates();
 
@@ -39,9 +39,9 @@ public interface DeterministicFSA<S, I, K, V, C> extends DeterministicFSM<S, I, 
      * @return {@code true} if the final state of this deterministic finite-state acceptor's computation on the
      *         specified input is in its set of accept states, {@code false} otherwise
      * 
-     * @see DeterministicFSM#compute(List)
+     * @see DFSM#compute(List)
      * @see #acceptStates()
-     * @see DeterministicFSM#inputElements()
+     * @see DFSM#inputElements()
      */
     boolean accepts(List<I> input);
 
@@ -56,8 +56,8 @@ public interface DeterministicFSA<S, I, K, V, C> extends DeterministicFSM<S, I, 
      * @return {@code true} if every input in the specified set is accepted by this deterministic finite-state acceptor,
      *         {@code false} otherwise
      * 
-     * @see DeterministicFSM#inputElements()
-     * @see DeterministicFSM#compute(List)
+     * @see DFSM#inputElements()
+     * @see DFSM#compute(List)
      * @see #accepts(List)
      */
     boolean recognizes(Set<List<I>> inputs);

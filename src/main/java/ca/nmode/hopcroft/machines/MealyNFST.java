@@ -5,11 +5,11 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * A nondeterministic finite-state mealy transducer. It is a {@link NondeterministicFSM nondeterministic finite-state
- * machine} which {@link #translations() translates} each undergone {@link NondeterministicFSM#transitions() transition}
- * in every branch of the {@link NondeterministicFSM#compute(List) computation} of an input to an
- * {@link #outputElements() output element}. The process which yields the corresponding output sequence for each branch
- * is known as its {@link #transduce(List) transduction} on the input.
+ * A nondeterministic finite-state mealy transducer. It is a {@link NFSM nondeterministic finite-state machine} which
+ * {@link #translations() translates} each undergone {@link NFSM#transitions() transition} in every branch of the
+ * {@link NFSM#compute(List) computation} of an input to an {@link #outputElements() output element}. The process which
+ * yields the corresponding output sequence for each branch is known as its {@link #transduce(List) transduction} on the
+ * input.
  * 
  * @param <S> the type of this nondeterministic finite-state mealy transducer's states
  * @param <I> the type of this nondeterministic finite-state mealy transducer's input elements
@@ -20,7 +20,7 @@ import java.util.Set;
  *
  * @author Naeem Model
  */
-public interface MealyNFST<S, I, K, V, C, O> extends NondeterministicFSM<S, I, K, V, C> {
+public interface MealyNFST<S, I, K, V, C, O> extends NFSM<S, I, K, V, C> {
     /**
      * Returns this nondeterministic finite-state mealy transducer's unmodifiable set of output elements. The returned
      * set neither is nor contains {@code null}, and attempts to modify it result in an
@@ -37,7 +37,7 @@ public interface MealyNFST<S, I, K, V, C, O> extends NondeterministicFSM<S, I, K
      * 
      * @return this nondeterministic finite-state mealy transducer's unmodifiable translation map
      * 
-     * @see NondeterministicFSM#transitions()
+     * @see NFSM#transitions()
      * @see #outputElements()
      */
     Map<K, O> translations();
@@ -52,8 +52,8 @@ public interface MealyNFST<S, I, K, V, C, O> extends NondeterministicFSM<S, I, K
      * 
      * @return this nondeterministic finite-state mealy transducer's transduction on the specified input
      *
-     * @see NondeterministicFSM#inputElements()
-     * @see NondeterministicFSM#compute(List)
+     * @see NFSM#inputElements()
+     * @see NFSM#compute(List)
      * @see #translations()
      */
     Set<List<O>> transduce(List<I> input);

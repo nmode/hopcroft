@@ -21,8 +21,7 @@ import java.util.Set;
  * 
  * @author Naeem Model
  */
-public interface NondeterministicFSM<S, I, K, V, C>
-        extends FiniteStateMachine<S, I, K, V, C, NondeterministicFSM<S, I, K, V, C>> {
+public interface NFSM<S, I, K, V, C> extends FSM<S, I, K, V, C, NFSM<S, I, K, V, C>> {
     /**
      * Returns this nondeterministic finite-state machine's unmodifiable set of states. The returned set neither is nor
      * contains {@code null}, is non-empty, and attempts to modify it result in an
@@ -60,8 +59,8 @@ public interface NondeterministicFSM<S, I, K, V, C>
     S startState();
 
     /**
-     * Returns this nondeterministic finite-state machine's {@link NondeterministicFSM computation} on the specified
-     * input. The returned computation is not {@code null}.
+     * Returns this nondeterministic finite-state machine's {@link NFSM computation} on the specified input. The
+     * returned computation is not {@code null}.
      * 
      * @param input the sequence of elements to compute this nondeterministic finite-state machine on
      * 
@@ -84,9 +83,9 @@ public interface NondeterministicFSM<S, I, K, V, C>
      * @return a set containing the final state of every branch of this nondeterministic finite-state machine's
      *         computation on the specified input
      * 
-     * @see NondeterministicFSM#states()
-     * @see NondeterministicFSM#inputElements()
-     * @see NondeterministicFSM#compute(List)
+     * @see NFSM#states()
+     * @see NFSM#inputElements()
+     * @see NFSM#compute(List)
      */
     Set<S> classify(List<I> input);
 }

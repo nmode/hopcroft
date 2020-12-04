@@ -4,10 +4,10 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * A skeletal implementation of a {@link NondeterministicFSA nondeterministic finite-state acceptor}. Extending classes
- * need not validate the set of {@link #states() states}, set of {@link #inputElements() input elements},
- * {@link #startState() start state} and set of {@link #acceptStates() accept states}. It is ensured that the
- * {@link #transitions() transition map} neither is nor contains keys or values that are {@code null}.
+ * A skeletal implementation of a {@link NFSA nondeterministic finite-state acceptor}. Extending classes need not
+ * validate the set of {@link #states() states}, set of {@link #inputElements() input elements}, {@link #startState()
+ * start state} and set of {@link #acceptStates() accept states}. It is ensured that the {@link #transitions()
+ * transition map} neither is nor contains keys or values that are {@code null}.
  * 
  * @param <S> the type of this nondeterministic finite-state acceptor's states
  * @param <I> the type of this nondeterministic finite-state acceptor's input elements
@@ -17,8 +17,7 @@ import java.util.Set;
  *
  * @author Naeem Model
  */
-public abstract class AbstractNFSA<S, I, K, V, C> extends AbstractNFSM<S, I, K, V, C>
-        implements NondeterministicFSA<S, I, K, V, C> {
+public abstract class AbstractNFSA<S, I, K, V, C> extends AbstractNFSM<S, I, K, V, C> implements NFSA<S, I, K, V, C> {
     final Set<S> acceptStates;
 
     /**

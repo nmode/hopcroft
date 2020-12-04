@@ -14,8 +14,7 @@ class OneWayDFSMs {
     private OneWayDFSMs() {}
 
     /* Verifies the transition maps of the one-way deterministic finite-state machines in this package. */
-    static <S, I> void verifyTransitions(
-            DeterministicFSM<S, I, Entry<S, I>, S, List<Entry<Entry<S, I>, S>>> oneWayDFSM) {
+    static <S, I> void verifyTransitions(DFSM<S, I, Entry<S, I>, S, List<Entry<Entry<S, I>, S>>> oneWayDFSM) {
         // Ensure the machine has a transition for every state-element pair.
         if (oneWayDFSM.transitions().size() != oneWayDFSM.states().size() * oneWayDFSM.inputElements().size())
             throw new IllegalArgumentException("Cannot construct a one-way deterministic finite-state machine whose "
@@ -40,7 +39,7 @@ class OneWayDFSMs {
 
     /* Computes the one-way deterministic finite-state machines in this package. */
     static <S, I> List<Entry<Entry<S, I>, S>> compute(
-            DeterministicFSM<S, I, Entry<S, I>, S, List<Entry<Entry<S, I>, S>>> oneWayDFSM, List<I> input) {
+            DFSM<S, I, Entry<S, I>, S, List<Entry<Entry<S, I>, S>>> oneWayDFSM, List<I> input) {
         // Ensure the input is not null.
         if (input == null)
             throw new NullPointerException(
@@ -67,16 +66,14 @@ class OneWayDFSMs {
     }
 
     /* Classifies inputs for the one-way deterministic finite-state machines in this package. */
-    static <S, I> S classify(DeterministicFSM<S, I, Entry<S, I>, S, List<Entry<Entry<S, I>, S>>> oneWayDFSM,
-            List<I> input) {
+    static <S, I> S classify(DFSM<S, I, Entry<S, I>, S, List<Entry<Entry<S, I>, S>>> oneWayDFSM, List<I> input) {
         // Return the final state of the computation.
         List<Entry<Entry<S, I>, S>> computation = compute(oneWayDFSM, input);
         return computation.get(computation.size() - 1).getValue();
     }
 
     /* Retrieves the reachable states of the one-way deterministic finite-state machines in this package. */
-    static <S, I> Set<S> reachableStates(
-            DeterministicFSM<S, I, Entry<S, I>, S, List<Entry<Entry<S, I>, S>>> oneWayDFSM) {
+    static <S, I> Set<S> reachableStates(DFSM<S, I, Entry<S, I>, S, List<Entry<Entry<S, I>, S>>> oneWayDFSM) {
         Set<S> reachableStates = new HashSet<>();
         // Add the start state to the set of reachable states and add it to the visitation queue.
         reachableStates.add(oneWayDFSM.startState());

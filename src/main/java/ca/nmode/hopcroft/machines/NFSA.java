@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * A nondeterministic finite-state acceptor. It is a {@link NondeterministicFSM nondeterministic finite-state machine}
- * which {@link #accepts(List) accepts} an input if any branch of its {@link NondeterministicFSM#compute(List)
- * computation} ends in an {@link #acceptStates() accept state}, and rejects otherwise.
+ * A nondeterministic finite-state acceptor. It is a {@link NFSM nondeterministic finite-state machine} which
+ * {@link #accepts(List) accepts} an input if any branch of its {@link NFSM#compute(List) computation} ends in an
+ * {@link #acceptStates() accept state}, and rejects otherwise.
  *
  * @param <S> the type of this nondeterministic finite-state acceptor's states
  * @param <I> the type of this nondeterministic finite-state acceptor's input elements
@@ -16,7 +16,7 @@ import java.util.Set;
  * 
  * @author Naeem Model
  */
-public interface NondeterministicFSA<S, I, K, V, C> extends NondeterministicFSM<S, I, K, V, C> {
+public interface NFSA<S, I, K, V, C> extends NFSM<S, I, K, V, C> {
     /**
      * Returns this nondeterministic finite-state acceptor's unmodifiable set of accept states. The returned set is a
      * subset of this nondeterministic finite-state acceptor's set of states, and attempts to modify it result in an
@@ -24,7 +24,7 @@ public interface NondeterministicFSA<S, I, K, V, C> extends NondeterministicFSM<
      * 
      * @return this nondeterministic finite-state acceptor's unmodifiable set of accept states
      * 
-     * @see NondeterministicFSM#states()
+     * @see NFSM#states()
      */
     Set<S> acceptStates();
 
@@ -39,9 +39,9 @@ public interface NondeterministicFSA<S, I, K, V, C> extends NondeterministicFSM<
      * @return {@code true} if the final state of any branch of this nondeterministic finite-state acceptor's
      *         computation on the specified input is in its set of accept states, {@code false} otherwise
      * 
-     * @see NondeterministicFSM#compute(List)
+     * @see NFSM#compute(List)
      * @see #acceptStates()
-     * @see NondeterministicFSM#inputElements()
+     * @see NFSM#inputElements()
      */
     boolean accepts(List<I> input);
 
@@ -56,8 +56,8 @@ public interface NondeterministicFSA<S, I, K, V, C> extends NondeterministicFSM<
      * @return {@code true} if every input in the specified set is accepted by this nondeterministic finite-state
      *         acceptor, {@code false} otherwise
      * 
-     * @see NondeterministicFSM#inputElements()
-     * @see NondeterministicFSM#compute(List)
+     * @see NFSM#inputElements()
+     * @see NFSM#compute(List)
      * @see #accepts(List)
      */
     boolean recognizes(Set<List<I>> inputs);
