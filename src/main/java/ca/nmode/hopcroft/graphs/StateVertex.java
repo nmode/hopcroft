@@ -1,10 +1,10 @@
 package ca.nmode.hopcroft.graphs;
 
 /**
- * A vertex of a {@link StateDiagram state diagram}, whose element is a state. In general, it serves as an encapsulator
- * for any object, as well as {@code null}.
+ * A vertex of a {@link StateDiagram state diagram} corresponding to a state. In general, it serves as a container for
+ * any object, as well as {@code null}.
  * 
- * @param <S> the type of this vertex's state element
+ * @param <S> the type of this vertex's corresponding state
  *
  * @author Naeem Model
  */
@@ -12,25 +12,25 @@ public final class StateVertex<S> {
     private S state;
 
     /**
-     * Constructs a vertex whose element is the specified state.
+     * Constructs a vertex corresponding to the specified state.
      * 
-     * @param state the state element of the new vertex
+     * @param state the state corresponding to the new vertex
      */
     public StateVertex(S state) {
         this.state = state;
     }
 
     /**
-     * Returns this vertex's state element
+     * Returns the state corresponding to this vertex.
      * 
-     * @return this vertex's state element
+     * @return the state corresponding to this vertex
      */
     public S state() {
         return state;
     }
 
     /**
-     * Returns the string representation of this vertex. It is the string representation of its state element, or
+     * Returns the string representation of this vertex. It is the string representation of its corresponding state, or
      * {@code "null"} if the state is {@null}.
      *
      * @return the string representation of this vertex
