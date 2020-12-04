@@ -2,12 +2,14 @@ package ca.nmode.hopcroft.graphs;
 
 import org.jgrapht.graph.SimpleDirectedGraph;
 
-import ca.nmode.hopcroft.machines.DeterministicFSM;
+import ca.nmode.hopcroft.machines.DFSM;
+import ca.nmode.hopcroft.machines.NFSM;
 
 /**
- * A graph representation of a {@link DeterministicFSM deterministic finite-state machine}'s computation. A linear
- * trace's {@link StateVertex vertex} is a container for any object, and so vertices corresponding to the same state can
- * be added. Furthermore, it can only be mutated such that the resulting graph is a path.
+ * A {@link ca.nmode.hopcroft.graphs graph} representation of a {@link DFSM deterministic finite-state machine}'s
+ * computation, or a single path of a {@link NFSM nondeterministic finite-state machine}'s computation. A linear trace's
+ * {@link StateVertex vertex} is a container for any object, and so vertices corresponding to the same state can be
+ * added. More generally, it is a directed path.
  *
  * @param <S> the type of the state associated with this linear trace's vertices
  * @param <L> the type of the labels of this linear trace's transition edges

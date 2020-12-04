@@ -7,9 +7,9 @@ import java.util.Set;
 import org.jgrapht.graph.DirectedPseudograph;
 
 /**
- * A graph representation of a {@link ca.nmode.hopcroft.machines finite-state machine}. The vertices and
- * {@link TransitionEdge edges} represent states and transitions, respectively. Every state diagram has a single,
- * immutable {@link #startVertex()}, which represents a start state. Optionally, state diagrams have
+ * A {@link ca.nmode.hopcroft.graphs graph} representation of a {@link ca.nmode.hopcroft.machines finite-state machine}.
+ * The vertices and {@link TransitionEdge edges} represent states and transitions, respectively. Every state diagram has
+ * a single, immutable {@link #startVertex()}, which represents a start state. Optionally, state diagrams have
  * {@link #acceptVertexSet() accept vertices} that represent accept states.
  *
  * @param <V> the type of this state diagram's vertices

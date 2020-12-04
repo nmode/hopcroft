@@ -45,7 +45,7 @@ public final class TransitionEdge<L> extends DefaultEdge {
      * Determines whether the specified object is equal to this transition edge. This is the case when {@code obj} is
      * also a transition edge whose source and target vertices, as well as its label, are equal to this one's.
      * 
-     * @return {@code true} if {@obj} is equal to this transition edge, {@code false} otherwise
+     * @return {@code true} if {@code obj} is equal to this transition edge, {@code false} otherwise
      */
     @Override
     public boolean equals(Object obj) {

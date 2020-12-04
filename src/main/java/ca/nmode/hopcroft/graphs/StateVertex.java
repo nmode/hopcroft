@@ -31,7 +31,7 @@ public final class StateVertex<S> {
 
     /**
      * Returns the string representation of this vertex. It is the string representation of its corresponding state, or
-     * {@code "null"} if the state is {@null}.
+     * {@code "null"} if the state is {@code null}.
      *
      * @return the string representation of this vertex
      */
