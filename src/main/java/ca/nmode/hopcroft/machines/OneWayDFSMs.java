@@ -4,10 +4,14 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayDeque;
 import java.util.Map.Entry;
 import java.util.Set;
+
+import ca.nmode.hopcroft.graphs.StateDiagram;
+import ca.nmode.hopcroft.graphs.TransitionEdge;
 
 /* A utility class used by the one-way deterministic finite-state machines in this package. */
 class OneWayDFSMs {
@@ -90,5 +94,17 @@ class OneWayDFSMs {
             visit.removeFirst();
         }
         return reachableStates;
+    }
+
+    /* Constructs the state diagrams of the one-way deterministic finite-state machines in this package. */
+    static <S, I> StateDiagram<S, I> diagram(Map<Entry<S, I>, S> transitions, S startState) {
+        StateDiagram<S, I> diagram = new StateDiagram<>(startState);
+        for (Entry<Entry<S, I>, S> transition : transitions.entrySet()) {
+            diagram.addVertex(transition.getKey().getKey());
+            diagram.addVertex(transition.getValue());
+            diagram.addEdge(transition.getKey().getKey(), transition.getValue(),
+                    new TransitionEdge<>(transition.getKey().getValue()));
+        }
+        return diagram;
     }
 }

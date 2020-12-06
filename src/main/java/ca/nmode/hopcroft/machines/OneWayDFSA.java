@@ -7,6 +7,8 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
+import ca.nmode.hopcroft.graphs.StateDiagram;
+
 /**
  * A one-way {@link DFSA deterministic finite-state acceptor}. During a {@link #compute(List) computation}, it reads the
  * elements in an input sequentially, from left to right, and halts once a {@link DFSM#transitions() transition} on the
@@ -186,5 +188,17 @@ public class OneWayDFSA<S, I> extends AbstractDFSA<S, I, Entry<S, I>, S, List<En
      */
     public final Set<S> reachableStates() {
         return OneWayDFSMs.reachableStates(this);
+    }
+
+    /**
+     * Returns this one-way deterministic finite-state acceptor's corresponding state diagram.
+     * 
+     * @return this one-way deterministic finite-state acceptor's corresponding state diagram.
+     */
+    public final StateDiagram<S, I> diagram() {
+        StateDiagram<S, I> diagram = OneWayDFSMs.diagram(transitions, startState);
+        for (S state : acceptStates)
+            diagram.addAcceptVertex(state);
+        return diagram;
     }
 }
