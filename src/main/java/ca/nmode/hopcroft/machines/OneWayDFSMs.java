@@ -18,32 +18,31 @@ class OneWayDFSMs {
     private OneWayDFSMs() {}
 
     /* Verifies the transition maps of the one-way deterministic finite-state machines in this package. */
-    static <S, I> void verifyTransitions(DFSM<S, I, Entry<S, I>, S, List<Entry<Entry<S, I>, S>>> oneWayDFSM) {
+    static <S, I> void verifyTransitions(Set<S> states, Set<I> inputElements, Map<Entry<S, I>, S> transitions) {
         // Ensure the machine has a transition for every state-element pair.
-        if (oneWayDFSM.transitions().size() != oneWayDFSM.states().size() * oneWayDFSM.inputElements().size())
+        if (transitions.size() != states.size() * inputElements.size())
             throw new IllegalArgumentException("Cannot construct a one-way deterministic finite-state machine whose "
                     + "transition map does not contain a transition for each element in its set of input elements on "
                     + "every state in its set of states.");
 
-        for (Entry<Entry<S, I>, S> transition : oneWayDFSM.transitions().entrySet()) {
+        for (Entry<Entry<S, I>, S> transition : transitions.entrySet()) {
             // Ensure the key of every transition's key is in the machine's set of states.
-            if (!oneWayDFSM.states().contains(transition.getKey().getKey()))
+            if (!states.contains(transition.getKey().getKey()))
                 throw new IllegalArgumentException("Cannot construct a one-way deterministic finite-state machine whose"
                         + " transition map's keys contain a key that is not in its set of states.");
             // Ensure the value of every transition's key is in the machine's set of input elements.
-            if (!oneWayDFSM.inputElements().contains(transition.getKey().getValue()))
+            if (!inputElements.contains(transition.getKey().getValue()))
                 throw new IllegalArgumentException("Cannot construct a one-way deterministic finite-state machine whose"
                         + " transition map's keys contain a value that is not in its set of input elements.");
             // Ensure the value of every transition is in the machine's set of states.
-            if (!oneWayDFSM.states().contains(transition.getValue()))
+            if (!states.contains(transition.getValue()))
                 throw new IllegalArgumentException("Cannot construct a one-way deterministic finite-state machine whose"
                         + " transition map contains a value that is not in its set of states.");
         }
     }
 
     /* Computes the one-way deterministic finite-state machines in this package. */
-    static <S, I> List<Entry<Entry<S, I>, S>> compute(
-            DFSM<S, I, Entry<S, I>, S, List<Entry<Entry<S, I>, S>>> oneWayDFSM, List<I> input) {
+    static <S, I> List<Entry<Entry<S, I>, S>> compute(List<I> input, Map<Entry<S, I>, S> transitions, S startState) {
         // Ensure the input is not null.
         if (input == null)
             throw new NullPointerException(
@@ -51,7 +50,7 @@ class OneWayDFSMs {
 
         List<Entry<Entry<S, I>, S>> computation = new ArrayList<>();
         // Initialize the current state to the start state.
-        S currentState = oneWayDFSM.startState();
+        S currentState = startState;
         // Add an entry for step zero of the computation, before any element is read.
         computation.add(new SimpleEntry<>(new SimpleEntry<>(currentState, null), currentState));
 
@@ -59,7 +58,7 @@ class OneWayDFSMs {
             // Create a pair of the current state and element.
             Entry<S, I> transitionKey = new SimpleEntry<>(currentState, inputElement);
             // Update the current state from the pair.
-            currentState = oneWayDFSM.transitions().get(transitionKey);
+            currentState = transitions.get(transitionKey);
             // Add an entry of the pair and updated current state to the computation.
             computation.add(new SimpleEntry<>(transitionKey, currentState));
             // Halt the computation if the current state is null.
@@ -70,26 +69,26 @@ class OneWayDFSMs {
     }
 
     /* Classifies inputs for the one-way deterministic finite-state machines in this package. */
-    static <S, I> S classify(DFSM<S, I, Entry<S, I>, S, List<Entry<Entry<S, I>, S>>> oneWayDFSM, List<I> input) {
+    static <S, I> S classify(List<I> input, Map<Entry<S, I>, S> transitions, S startState) {
         // Return the final state of the computation.
-        List<Entry<Entry<S, I>, S>> computation = compute(oneWayDFSM, input);
+        List<Entry<Entry<S, I>, S>> computation = compute(input, transitions, startState);
         return computation.get(computation.size() - 1).getValue();
     }
 
     /* Retrieves the reachable states of the one-way deterministic finite-state machines in this package. */
-    static <S, I> Set<S> reachableStates(DFSM<S, I, Entry<S, I>, S, List<Entry<Entry<S, I>, S>>> oneWayDFSM) {
+    static <S, I> Set<S> reachableStates(Set<I> inputElements, Map<Entry<S, I>, S> transitions, S startState) {
         Set<S> reachableStates = new HashSet<>();
         // Add the start state to the set of reachable states and add it to the visitation queue.
-        reachableStates.add(oneWayDFSM.startState());
+        reachableStates.add(startState);
         Deque<S> visit = new ArrayDeque<>(reachableStates);
 
         // Continue until transitions have been taken for all visited states on every input element.
         while (!visit.isEmpty()) {
-            for (I inputElement : oneWayDFSM.inputElements()) {
+            for (I inputElement : inputElements) {
                 Entry<S, I> transitionKey = new SimpleEntry<>(visit.getFirst(), inputElement);
                 // Add the resulting state of the transition to be visited if it was not already reached.
-                if (reachableStates.add(oneWayDFSM.transitions().get(transitionKey)))
-                    visit.add(oneWayDFSM.transitions().get(transitionKey));
+                if (reachableStates.add(transitions.get(transitionKey)))
+                    visit.add(transitions.get(transitionKey));
             }
             visit.removeFirst();
         }
