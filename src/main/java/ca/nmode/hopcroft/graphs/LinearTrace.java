@@ -1,5 +1,9 @@
 package ca.nmode.hopcroft.graphs;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.jgrapht.graph.SimpleDirectedGraph;
 
 import ca.nmode.hopcroft.machines.DFSM;
@@ -19,6 +23,7 @@ import ca.nmode.hopcroft.machines.NFSM;
 public final class LinearTrace<S, L> extends SimpleDirectedGraph<StateVertex<S>, TransitionEdge<L>> {
     private static final long serialVersionUID = 6311317638312914080L;
     private StateVertex<S> startVertex;
+    private Set<StateVertex<S>> acceptVertices;
 
     private LinearTrace(Class<TransitionEdge<L>> edgeClass) {
         super(edgeClass);
@@ -35,6 +40,7 @@ public final class LinearTrace<S, L> extends SimpleDirectedGraph<StateVertex<S>,
             throw new NullPointerException("Cannot construct a linear trace whose start vertex is null.");
         addVertex(startVertex);
         this.startVertex = startVertex;
+        acceptVertices = new HashSet<>();
     }
 
     /**
@@ -48,6 +54,7 @@ public final class LinearTrace<S, L> extends SimpleDirectedGraph<StateVertex<S>,
     public boolean removeVertex(StateVertex<S> v) {
         if (startVertex == v)
             throw new IllegalArgumentException("Cannot remove a linear trace's start vertex.");
+        acceptVertices.remove(v);
         return super.removeVertex(v);
     }
 
@@ -75,11 +82,27 @@ public final class LinearTrace<S, L> extends SimpleDirectedGraph<StateVertex<S>,
     }
 
     /**
-     * Returns this linear trace's start vertex.
+     * Adds the specified vertex to this linear trace if not already present, and marks it as accepting.
      * 
-     * @return this linear trace's start vertex
+     * @param v the vertex to add to this linear trace
+     * 
+     * @return {@code false} if the specified vertex is in this linear trace's set of accept vertices, {@code} true
+     *         otherwise
+     * 
+     * @see #addVertex(Object)
      */
-    public StateVertex<S> startVertex() {
-        return startVertex;
+    public boolean addAcceptVertex(StateVertex<S> v) {
+        addVertex(v);
+        return acceptVertices.add(v);
+    }
+
+    /**
+     * Returns the set of accept vertices contained in this linear trace. The returned set is unmodifiable and attempts
+     * to modify it result in an {@code UnsupportedOperationException}.
+     * 
+     * @return the set of accept vertices contained in this linear trace
+     */
+    public Set<StateVertex<S>> acceptVertexSet() {
+        return Collections.unmodifiableSet(acceptVertices);
     }
 }
