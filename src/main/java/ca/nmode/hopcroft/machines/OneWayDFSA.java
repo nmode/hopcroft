@@ -7,7 +7,9 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
+import ca.nmode.hopcroft.graphs.LinearTrace;
 import ca.nmode.hopcroft.graphs.StateDiagram;
+import ca.nmode.hopcroft.graphs.StateVertex;
 
 /**
  * A one-way {@link DFSA deterministic finite-state acceptor}. During a {@link #compute(List) computation}, it reads the
@@ -200,5 +202,21 @@ public class OneWayDFSA<S, I> extends AbstractDFSA<S, I, Entry<S, I>, S, List<En
         for (S state : acceptStates)
             diagram.addAcceptVertex(state);
         return diagram;
+    }
+
+    /**
+     * Returns the linear trace of this one-way deterministic finite-state acceptor's computation on the specified
+     * input.
+     * 
+     * @param input the sequence of elements to compute this one-way deterministic finite-state acceptor on
+     * 
+     * @return the linear trace of this one-way deterministic finite-state acceptor's computation on the specified input
+     */
+    public final LinearTrace<S, I> trace(List<I> input) {
+        LinearTrace<S, I> trace = OneWayDFSMs.trace(input, transitions, startState);
+        for (StateVertex<S> vertex : trace.vertexSet())
+            if (acceptStates.contains(vertex.state()))
+                trace.addAcceptVertex(vertex);
+        return trace;
     }
 }

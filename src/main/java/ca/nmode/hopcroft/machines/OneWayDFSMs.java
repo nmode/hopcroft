@@ -10,7 +10,9 @@ import java.util.ArrayDeque;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import ca.nmode.hopcroft.graphs.LinearTrace;
 import ca.nmode.hopcroft.graphs.StateDiagram;
+import ca.nmode.hopcroft.graphs.StateVertex;
 import ca.nmode.hopcroft.graphs.TransitionEdge;
 
 /* A utility class used by the one-way deterministic finite-state machines in this package. */
@@ -105,5 +107,20 @@ class OneWayDFSMs {
                     new TransitionEdge<>(transition.getKey().getValue()));
         }
         return diagram;
+    }
+
+    /* Constructs traces of the one-way deterministic finite-state machines' computations in this package. */
+    static <S, I> LinearTrace<S, I> trace(List<I> input, Map<Entry<S, I>, S> transitions, S startState) {
+        List<Entry<Entry<S, I>, S>> computation = compute(input, transitions, startState);
+        StateVertex<S> currentStateVertex = new StateVertex<>(startState);
+        LinearTrace<S, I> trace = new LinearTrace<>(currentStateVertex);
+        trace.addVertex(currentStateVertex);
+        for (Entry<Entry<S, I>, S> step : computation.subList(1, computation.size())) {
+            StateVertex<S> nextStateVertex = new StateVertex<>(step.getValue());
+            trace.addVertex(nextStateVertex);
+            trace.addEdge(currentStateVertex, nextStateVertex, new TransitionEdge<>(step.getKey().getValue()));
+            currentStateVertex = nextStateVertex;
+        }
+        return trace;
     }
 }
