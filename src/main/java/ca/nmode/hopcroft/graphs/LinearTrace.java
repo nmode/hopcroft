@@ -15,7 +15,7 @@ import ca.nmode.hopcroft.machines.NFSM;
  * {@link StateVertex vertex} is a container for any object, and so vertices corresponding to the same state can be
  * added. More generally, it is a directed path.
  *
- * @param <S> the type of the state associated with this linear trace's vertices
+ * @param <S> the type of the states associated with this linear trace's vertices
  * @param <L> the type of the labels of this linear trace's transition edges
  *
  * @author Naeem Model
@@ -59,26 +59,37 @@ public final class LinearTrace<S, L> extends SimpleDirectedGraph<StateVertex<S>,
     }
 
     /**
-     * Adds the specified edge to this graph, going from the source vertex to the target vertex, if not already present.
+     * Adds the specified edge to this linear trace, going from the source vertex to the target vertex, if not already
+     * present.
      * 
-     * @throws IllegalArgumentException if the source and target vertices are not contained in this linear trace; the
-     *                                  source vertex has outdegree 1; the target vertex has indegree 1; or the target
-     *                                  vertex is the start vertex
+     * @throws NullPointerException     if the specified edge is {@code null}
+     * @throws IllegalArgumentException if the source or target vertices are not contained in this linear trace; the
+     *                                  target vertex is the start vertex; the source vertex has outdegree 1; or the
+     *                                  target vertex has indegree 1
      * 
      * @return {@code true} if this linear trace does not contain the specified edge, {@code false} otherwise
      */
     @Override
     public boolean addEdge(StateVertex<S> sourceVertex, StateVertex<S> targetVertex, TransitionEdge<L> e) {
+        if (startVertex == targetVertex)
+            throw new IllegalArgumentException(
+                    "Cannot add an edge, whose target vertex is the start vertex, to a linear trace.");
         if (outDegreeOf(sourceVertex) == 1)
             throw new IllegalArgumentException(
                     "Cannot add an edge, whose source vertex has an outdegree greater than zero, to a linear trace.");
         if (inDegreeOf(targetVertex) == 1)
             throw new IllegalArgumentException(
                     "Cannot add an edge, whose target vertex has an indegree greater than zero, to a linear trace.");
-        if (startVertex == targetVertex)
-            throw new IllegalArgumentException(
-                    "Cannot add an edge, whose target vertex is the start vertex, to a linear trace.");
         return super.addEdge(sourceVertex, targetVertex, e);
+    }
+
+    /**
+     * Returns this linear trace's start vertex.
+     * 
+     * @return this linear trace's start vertex
+     */
+    public StateVertex<S> startVertex() {
+        return startVertex;
     }
 
     /**
