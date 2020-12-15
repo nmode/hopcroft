@@ -49,7 +49,7 @@ public class OneWayMooreDFST<S, I, O> extends AbstractMooreDFST<S, I, Entry<S, I
     public OneWayMooreDFST(Set<S> states, Set<I> inputElements, Map<Entry<S, I>, S> transitions, S startState,
             Set<O> outputElements, Map<S, O> translations) {
         super(states, inputElements, transitions, startState, outputElements, translations);
-        OneWayDFSMs.verifyTransitions(states, inputElements, transitions);
+        OneWayDFSMs.verifyTransitions(this.states, this.inputElements, transitions);
     }
 
     public OneWayMooreDFST(DFSM<S, I, Entry<S, I>, S, ?> d, Set<O> outputElements, Map<S, O> translations) {

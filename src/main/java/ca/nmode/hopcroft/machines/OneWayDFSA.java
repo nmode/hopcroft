@@ -46,7 +46,7 @@ public class OneWayDFSA<S, I> extends AbstractDFSA<S, I, Entry<S, I>, S, List<En
     public OneWayDFSA(Set<S> states, Set<I> inputElements, Map<Entry<S, I>, S> transitions, S startState,
             Set<S> acceptStates) {
         super(states, inputElements, transitions, startState, acceptStates);
-        OneWayDFSMs.verifyTransitions(states, inputElements, transitions);
+        OneWayDFSMs.verifyTransitions(this.states, this.inputElements, transitions);
     }
 
     /**

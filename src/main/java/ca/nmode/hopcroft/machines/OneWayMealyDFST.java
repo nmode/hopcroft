@@ -48,7 +48,7 @@ public class OneWayMealyDFST<S, I, O> extends AbstractMealyDFST<S, I, Entry<S, I
     public OneWayMealyDFST(Set<S> states, Set<I> inputElements, Map<Entry<S, I>, S> transitions, S startState,
             Set<O> outputElements, Map<Entry<S, I>, O> translations) {
         super(states, inputElements, transitions, startState, outputElements, translations);
-        OneWayDFSMs.verifyTransitions(states, inputElements, transitions);
+        OneWayDFSMs.verifyTransitions(this.states, this.inputElements, transitions);
     }
 
     public OneWayMealyDFST(DFSM<S, I, Entry<S, I>, S, ?> d, Set<O> outputElements, Map<Entry<S, I>, O> translations) {
