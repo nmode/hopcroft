@@ -51,6 +51,27 @@ public class OneWayMealyDFST<S, I, O> extends AbstractMealyDFST<S, I, Entry<S, I
         OneWayDFSMs.verifyTransitions(this.states, this.inputElements, transitions);
     }
 
+    /**
+     * Constructs a one-way deterministic finite-state mealy transducer with the specified deterministic finite-state
+     * machine's set of states, set of input elements, transition map and start state, as well as the specified
+     * translation map.
+     * 
+     * @param d              the deterministic finite-state machine whose set of states, set of input elements,
+     *                       transition map and start state is used to construct the new one-way deterministic
+     *                       finite-state mealy transducer
+     * @param outputElements the set of output elements of the new one-way deterministic finite-state mealy transducer
+     * @param translations   the translation map of the new one-way deterministic finite-state mealy transducer
+     * 
+     * @throws NullPointerException     if {@code d}, {@code outputElements}, or {@code translations} is {@code null};
+     *                                  or {@code outputElements} contains {@code null}
+     * @throws IllegalArgumentException if the size of {@code d}'s transition map is not equal to the product of its set
+     *                                  of states' and set of input elements' sizes; {@code d}'s transition map contains
+     *                                  keys whose state or element is not in its set of states and set of input
+     *                                  elements, respectively; {@code d}'s transition map contains values that are not
+     *                                  in its set of states; {@code translations} contains values that are not in
+     *                                  {@code outputElements}; or {@code translations}' key set is not equal to the key
+     *                                  set of {@code d}'s transition map
+     */
     public OneWayMealyDFST(DFSM<S, I, Entry<S, I>, S, ?> d, Set<O> outputElements, Map<Entry<S, I>, O> translations) {
         this(Objects.requireNonNull(d,
                 "Cannot construct a one-way deterministic finite-state mealy transducer from a "
