@@ -40,7 +40,7 @@ public class OneWayNFSA<S, I> extends AbstractNFSA<S, I, Entry<S, I>, Set<S>, Li
     public OneWayNFSA(Set<S> states, Set<I> inputElements, Map<Entry<S, I>, Set<S>> transitions, S startState,
             Set<S> acceptStates) {
         super(states, inputElements, transitions, startState, acceptStates);
-        OneWayNFSMs.verifyTransitions(acceptStates, inputElements, transitions);
+        OneWayNFSMs.verifyTransitions(this.states, inputElements, transitions);
     }
 
     /**
