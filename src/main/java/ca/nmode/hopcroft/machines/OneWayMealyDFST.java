@@ -38,12 +38,12 @@ public class OneWayMealyDFST<S, I, O> extends AbstractMealyDFST<S, I, Entry<S, I
      *                                  {@code inputElements} or {@code outputElements} contains {@code null}; or
      *                                  {@code transitions} contains {@code null} keys or values
      * @throws IllegalArgumentException if {@code states} is empty; {@code startState} is not in {@code states};
-     *                                  {@code translations} contains values that are not in {@code outputElements};
-     *                                  {@code translations}' key set is not equal to {@code transitions}' key set;
      *                                  {@code transitions}' size is not equal to the product of {@code states}' and
-     *                                  {@code inputElement}'s sizes; {@code transitions}' contains keys whose state or
-     *                                  element is not in {@code states} and {@code inputElements}, respectively; or
-     *                                  {@code transitions} contains values that are not in {@code states}
+     *                                  {@code inputElement}'s sizes; {@code transitions} contains keys whose state or
+     *                                  element is not in {@code states} and {@code inputElements}, respectively;
+     *                                  {@code transitions} contains values that are not in {@code states};
+     *                                  {@code translations} contains values that are not in {@code outputElements}; or
+     *                                  {@code translations}' key set is not equal to {@code transitions}' key set;
      */
     public OneWayMealyDFST(Set<S> states, Set<I> inputElements, Map<Entry<S, I>, S> transitions, S startState,
             Set<O> outputElements, Map<Entry<S, I>, O> translations) {
@@ -53,8 +53,8 @@ public class OneWayMealyDFST<S, I, O> extends AbstractMealyDFST<S, I, Entry<S, I
 
     /**
      * Constructs a one-way deterministic finite-state mealy transducer with the specified deterministic finite-state
-     * machine's set of states, set of input elements, transition map and start state, as well as the specified
-     * translation map.
+     * machine's set of states, set of input elements, transition map and start state, as well as the specified set of
+     * output elements and translation map.
      * 
      * @param d              the deterministic finite-state machine whose set of states, set of input elements,
      *                       transition map and start state is used to construct the new one-way deterministic
@@ -73,8 +73,7 @@ public class OneWayMealyDFST<S, I, O> extends AbstractMealyDFST<S, I, Entry<S, I
      *                                  set of {@code d}'s transition map
      */
     public OneWayMealyDFST(DFSM<S, I, Entry<S, I>, S, ?> d, Set<O> outputElements, Map<Entry<S, I>, O> translations) {
-        this(Objects.requireNonNull(d,
-                "Cannot construct a one-way deterministic finite-state mealy transducer from a "
+        this(Objects.requireNonNull(d, "Cannot construct a one-way deterministic finite-state mealy transducer from a "
                         + "null deterministic finite-state machine.")
                 .states(), d.inputElements(), d.transitions(), d.startState(), outputElements, translations);
     }

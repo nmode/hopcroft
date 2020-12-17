@@ -8,7 +8,7 @@ import java.util.Set;
 
 /**
  * A one-way {@link NFSA nondeterministic finite-state acceptor}. During a {@link #compute(List) computation}, it reads
- * the elements in an input sequentially, from left to right, and halts once a {@link DFSM#transitions() transition} on
+ * the elements in an input sequentially, from left to right, and halts once a {@link NFSM#transitions() transition} on
  * the last element is taken, provided it has not halted before then.
  *
  * @param <S> the type of this one-way nondeterministic finite-state acceptor's states
@@ -81,8 +81,7 @@ public class OneWayNFSA<S, I> extends AbstractNFSA<S, I, Entry<S, I>, Set<S>, Li
      *                                  values that are not subsets of its set of states
      */
     public OneWayNFSA(NFSM<S, I, Entry<S, I>, Set<S>, ?> n, Set<S> acceptStates) {
-        this(Objects.requireNonNull(n,
-                "Cannot construct a one-way nondeterministic finite-state acceptor from a null "
+        this(Objects.requireNonNull(n, "Cannot construct a one-way nondeterministic finite-state acceptor from a null "
                         + "nondeterministic finite-state machine.")
                 .states(), n.inputElements(), n.transitions(), n.startState(), acceptStates);
     }

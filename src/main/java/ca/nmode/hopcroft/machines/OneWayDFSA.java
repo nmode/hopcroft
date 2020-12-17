@@ -89,8 +89,7 @@ public class OneWayDFSA<S, I> extends AbstractDFSA<S, I, Entry<S, I>, S, List<En
      *                                  set of states
      */
     public OneWayDFSA(DFSM<S, I, Entry<S, I>, S, ?> d, Set<S> acceptStates) {
-        this(Objects.requireNonNull(d,
-                "Cannot construct a one-way deterministic finite-state acceptor from a null "
+        this(Objects.requireNonNull(d, "Cannot construct a one-way deterministic finite-state acceptor from a null "
                         + "deterministic finite-state machine.")
                 .states(), d.inputElements(), d.transitions(), d.startState(), acceptStates);
     }
