@@ -46,7 +46,7 @@ public class OneWayMealyNFST<S, I, O>
     public OneWayMealyNFST(Set<S> states, Set<I> inputElements, Map<Entry<S, I>, Set<S>> transitions, S startState,
             Set<O> outputElements, Map<Entry<S, I>, O> translations) {
         super(states, inputElements, transitions, startState, outputElements, translations);
-        OneWayNFSMs.verifyTransitions(this.states, inputElements, transitions);
+        OneWayNFSMs.verifyTransitions(this);
     }
 
     /**
@@ -78,19 +78,19 @@ public class OneWayMealyNFST<S, I, O>
     }
 
     @Override
-    public List<Entry<Entry<Set<S>, I>, Set<S>>> compute(List<I> input) {
+    public final List<Entry<Entry<Set<S>, I>, Set<S>>> compute(List<I> input) {
         // TODO
         return null;
     }
 
     @Override
-    public Set<S> classify(List<I> input) {
+    public final Set<S> classify(List<I> input) {
         // TODO
         return null;
     }
 
     @Override
-    public Set<List<O>> transduce(List<I> input) {
+    public final Set<List<O>> transduce(List<I> input) {
         // TODO
         return null;
     }

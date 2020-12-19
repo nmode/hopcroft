@@ -17,6 +17,8 @@ import java.util.Set;
  * @author Naeem Model
  */
 public class OneWayNFSA<S, I> extends AbstractNFSA<S, I, Entry<S, I>, Set<S>, List<Entry<Entry<Set<S>, I>, Set<S>>>> {
+    private boolean hasEpsilon;
+
     /**
      * Constructs a one-way nondeterministic finite-state acceptor given a set of states, set of input elements,
      * transition map, start state and set of accept states.
@@ -40,7 +42,7 @@ public class OneWayNFSA<S, I> extends AbstractNFSA<S, I, Entry<S, I>, Set<S>, Li
     public OneWayNFSA(Set<S> states, Set<I> inputElements, Map<Entry<S, I>, Set<S>> transitions, S startState,
             Set<S> acceptStates) {
         super(states, inputElements, transitions, startState, acceptStates);
-        OneWayNFSMs.verifyTransitions(this.states, inputElements, transitions);
+        hasEpsilon = OneWayNFSMs.verifyTransitions(this);
     }
 
     /**
@@ -104,26 +106,37 @@ public class OneWayNFSA<S, I> extends AbstractNFSA<S, I, Entry<S, I>, Set<S>, Li
     }
 
     @Override
-    public List<Entry<Entry<Set<S>, I>, Set<S>>> compute(List<I> input) {
+    public final List<Entry<Entry<Set<S>, I>, Set<S>>> compute(List<I> input) {
         // TODO
         return null;
     }
 
     @Override
-    public Set<S> classify(List<I> input) {
+    public final Set<S> classify(List<I> input) {
         // TODO
         return null;
     }
 
     @Override
-    public boolean accepts(List<I> input) {
+    public final boolean accepts(List<I> input) {
         // TODO
         return false;
     }
 
     @Override
-    public boolean recognizes(Set<List<I>> inputs) {
+    public final boolean recognizes(Set<List<I>> inputs) {
         // TODO
         return false;
+    }
+
+    /**
+     * Returns {@code true} if this one-way nondeterministic finite-state machine has epsilon transitions, {@code false}
+     * otherwise.
+     * 
+     * @return {@code true} if this one-way nondeterministic finite-state machine has epsilon transitions, {@code false}
+     *         otherwise
+     */
+    public final boolean hasEpsilon() {
+        return hasEpsilon;
     }
 }
