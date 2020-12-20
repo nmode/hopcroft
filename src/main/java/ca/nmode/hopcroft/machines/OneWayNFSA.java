@@ -1,5 +1,9 @@
 package ca.nmode.hopcroft.machines;
 
+import java.util.AbstractMap.SimpleEntry;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -138,5 +142,36 @@ public class OneWayNFSA<S, I> extends AbstractNFSA<S, I, Entry<S, I>, Set<S>, Li
      */
     public final boolean hasEpsilon() {
         return hasEpsilon;
+    }
+
+    /**
+     * Returns the epsilon closure of the specified state in this one-way nondeterministic finite-state machine. The
+     * returned set contains the states of this machine that are reachable from the specified state via zero or more
+     * epsilon transitions.
+     * 
+     * @param state the state whose epsilon closure is to be taken
+     * 
+     * @return the epsilon closure of the specified state in this one-way nondeterministic finite-state machine
+     * 
+     * @see #states()
+     * @see #transitions()
+     */
+    public final Set<S> epsilonClosure(S state) {
+        Set<S> epsilonClosure = new HashSet<>();
+        // If the specified state is not in the set of states, return the empty set.
+        if (states.contains(state)) {
+            epsilonClosure.add(state);
+            Deque<S> visit = new ArrayDeque<>(epsilonClosure);
+            // Continue until epsilon transitions have been taken for all visited states
+            while (!visit.isEmpty()) {
+                Set<S> transitionValue = transitions.get(new SimpleEntry<>(visit.removeFirst(), null));
+                if (transitionValue != null)
+                    for (S s : transitionValue)
+                        // Add the resulting state of the transition to be visited if it was not already reached.
+                        if (epsilonClosure.add(s))
+                            visit.addLast(s);
+            }
+        }
+        return epsilonClosure;
     }
 }
