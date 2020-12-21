@@ -134,24 +134,24 @@ public class OneWayNFSA<S, I> extends AbstractNFSA<S, I, Entry<S, I>, Set<S>, Li
     }
 
     /**
-     * Returns {@code true} if this one-way nondeterministic finite-state machine has epsilon transitions, {@code false}
-     * otherwise.
+     * Returns {@code true} if this one-way nondeterministic finite-state acceptor has epsilon transitions,
+     * {@code false} otherwise.
      * 
-     * @return {@code true} if this one-way nondeterministic finite-state machine has epsilon transitions, {@code false}
-     *         otherwise
+     * @return {@code true} if this one-way nondeterministic finite-state acceptor has epsilon transitions,
+     *         {@code false} otherwise
      */
     public final boolean hasEpsilon() {
         return hasEpsilon;
     }
 
     /**
-     * Returns the epsilon closure of the specified state in this one-way nondeterministic finite-state machine. The
-     * returned set contains the states of this machine that are reachable from the specified state via zero or more
+     * Returns the epsilon closure of the specified state in this one-way nondeterministic finite-state acceptor. The
+     * returned set contains the states of this acceptor that are reachable from the specified state via zero or more
      * epsilon transitions.
      * 
      * @param state the state whose epsilon closure is to be taken
      * 
-     * @return the epsilon closure of the specified state in this one-way nondeterministic finite-state machine
+     * @return the epsilon closure of the specified state in this one-way nondeterministic finite-state acceptor
      * 
      * @see #states()
      * @see #transitions()
@@ -173,5 +173,20 @@ public class OneWayNFSA<S, I> extends AbstractNFSA<S, I, Entry<S, I>, Set<S>, Li
             }
         }
         return epsilonClosure;
+    }
+
+    /**
+     * Returns this one-way nondeterministic finite-state acceptor's set of reachable states. A state is reachable if
+     * this acceptor has a sequence of zero or more transitions (including epsilon transitions) leading to it from its
+     * start state. The returned set is a subset of this acceptor's set of states.
+     * 
+     * @return this one-way nondeterministic finite-state acceptor's set of reachable states
+     * 
+     * @see DFSM#states()
+     * @see DFSM#transitions()
+     * @see DFSM#startState()
+     */
+    public final Set<S> reachableStates() {
+        return OneWayNFSMs.reachableStates(inputElements, transitions, startState);
     }
 }

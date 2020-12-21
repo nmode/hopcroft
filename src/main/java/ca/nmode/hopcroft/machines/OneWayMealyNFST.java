@@ -94,4 +94,19 @@ public class OneWayMealyNFST<S, I, O>
         // TODO
         return null;
     }
+
+    /**
+     * Returns this one-way nondeterministic finite-state Mealy transducer's set of reachable states. A state is
+     * reachable if this Mealy transducer has a sequence of zero or more transitions (including epsilon transitions)
+     * leading to it from its start state. The returned set is a subset of this Mealy transducer's set of states.
+     * 
+     * @return this one-way nondeterministic finite-state Mealy transducer's set of reachable states
+     * 
+     * @see DFSM#states()
+     * @see DFSM#transitions()
+     * @see DFSM#startState()
+     */
+    public final Set<S> reachableStates() {
+        return OneWayNFSMs.reachableStates(inputElements, transitions, startState);
+    }
 }

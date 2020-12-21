@@ -1,5 +1,10 @@
 package ca.nmode.hopcroft.machines;
 
+import java.util.AbstractMap.SimpleEntry;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
@@ -24,13 +29,36 @@ class OneWayNFSMs {
                 hasEpsilon = true;
             else if (!oneWayNFSM.inputElements().contains(transition.getKey().getValue()))
                 throw new IllegalArgumentException("Cannot construct a one-way nondeterministic finite-state machine "
-                        + "whose transition map's keys contain a non-null value that is not in its set of input "
-                        + "elements");
+                        + "whose transition map's keys contain a value that is not in its set of input elements.");
             // Ensure the value of every transition is a subset of the set of states.
             if (!oneWayNFSM.states().containsAll(transition.getValue()))
                 throw new IllegalArgumentException("Cannot construct a one-way nondeterministic finite-state machine "
                         + "whose transition map contains a value that is not a subset of its set of states.");
         }
         return hasEpsilon;
+    }
+
+    /* Retrieves the reachable states of the one-way nondeterministic finite-state machines in this package. */
+    static <S, I> Set<S> reachableStates(Set<I> inputElements, Map<Entry<S, I>, Set<S>> transitions, S startState) {
+        Set<S> reachableStates = new HashSet<>();
+        // Add the start state to the set of reachable states and add it to the visitation queue.
+        reachableStates.add(startState);
+        Deque<S> visit = new ArrayDeque<>(reachableStates);
+
+        Set<I> inputElementsWithNull = new HashSet<>(inputElements);
+        inputElementsWithNull.add(null);
+        // Continue until transitions have been taken for all visited states on every input element, as well as null.
+        while (!visit.isEmpty()) {
+            for (I inputElement : inputElementsWithNull) {
+                Set<S> transitionValue = transitions.get(new SimpleEntry<>(visit.getFirst(), inputElement));
+                if (transitionValue != null)
+                    for (S state : transitionValue)
+                        // Add the resulting state of the transition to be visited if it was not already reached.
+                        if (reachableStates.add(state))
+                            visit.add(state);
+            }
+            visit.removeFirst();
+        }
+        return reachableStates;
     }
 }
