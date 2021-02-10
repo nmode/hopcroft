@@ -56,17 +56,15 @@ class OneWayDFSMs {
         // Add an entry for step zero of the computation, before any element is read.
         computation.add(new SimpleEntry<>(new SimpleEntry<>(currentState, null), currentState));
 
-        for (I inputElement : input) {
-            // Create a pair of the current state and element.
-            Entry<S, I> transitionKey = new SimpleEntry<>(currentState, inputElement);
-            // Update the current state from the pair.
-            currentState = transitions.get(transitionKey);
-            // Add an entry of the pair and updated current state to the computation.
-            computation.add(new SimpleEntry<>(transitionKey, currentState));
-            // Halt the computation if the current state is null.
-            if (currentState == null)
-                break;
-        }
+        while (currentState != null)
+            for (I inputElement : input) {
+                // Create a pair of the current state and element.
+                Entry<S, I> transitionKey = new SimpleEntry<>(currentState, inputElement);
+                // Update the current state from the pair.
+                currentState = transitions.get(transitionKey);
+                // Add an entry of the pair and updated current state to the computation.
+                computation.add(new SimpleEntry<>(transitionKey, currentState));
+            }
         return computation;
     }
 
