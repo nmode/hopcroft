@@ -2,8 +2,10 @@ package ca.nmode.hopcroft.machines;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -38,6 +40,56 @@ class OneWayNFSMs {
         return hasEpsilon;
     }
 
+    /* Computes the one-way nondeterministic finite-state machines in this package. */
+    static <S, I> List<Entry<Entry<Set<S>, I>, Set<S>>> compute(
+            NFSM<S, I, Entry<S, I>, Set<S>, List<Entry<Entry<Set<S>, I>, Set<S>>>> oneWayNFSM, List<I> input) {
+        // Ensure the input is not null.
+        if (input == null)
+            throw new NullPointerException(
+                    "Cannot compute a one-way nondeterministic finite-state machine on a null input.");
+
+        // Add the start state to the current states and take the epsilon closure if the machine is an acceptor.
+        Set<S> currentStates = new HashSet<>();
+        currentStates.add(oneWayNFSM.startState());
+        if (oneWayNFSM instanceof OneWayNFSA)
+            currentStates = ((OneWayNFSA<S, I>) oneWayNFSM).epsilonClosure(currentStates);
+
+        // Add an entry for step zero of the computation, before any element is read.
+        List<Entry<Entry<Set<S>, I>, Set<S>>> computation = new ArrayList<>();
+        computation.add(new SimpleEntry<>(new SimpleEntry<>(new HashSet<>(Set.of(oneWayNFSM.startState())), null),
+                currentStates));
+
+        Set<S> nullSingleton = new HashSet<>();
+        nullSingleton.add(null);
+        // Halt the computation if the only current state is null.
+        while (!currentStates.equals(nullSingleton))
+            for (I inputElement : input) {
+                Set<S> nextStates = new HashSet<>();
+                // Retrieve the next states of every current state on the current element.
+                for (S currentState : currentStates) {
+                    Set<S> output = oneWayNFSM.transitions().get(new SimpleEntry<>(currentState, inputElement));
+                    if (output == null || output.isEmpty())
+                        nextStates.add(null);
+                    else
+                        nextStates.addAll(output);
+                }
+                // Take the epsilon closure of the next states if the machine is an acceptor.
+                if (oneWayNFSM instanceof OneWayNFSA)
+                    nextStates = ((OneWayNFSA<S, I>) oneWayNFSM).epsilonClosure(nextStates);
+                // Add a new entry to the computation and set the current states to the next states.
+                computation.add(new SimpleEntry<>(new SimpleEntry<>(currentStates, inputElement), nextStates));
+                currentStates = nextStates;
+            }
+        return computation;
+    }
+
+    /* Classifies inputs for the one-way nondeterministic finite-state machines in this package. */
+    static <S, I> Set<S> classify(NFSM<S, I, Entry<S, I>, Set<S>, List<Entry<Entry<Set<S>, I>, Set<S>>>> oneWayNFSM,
+            List<I> input) {
+        List<Entry<Entry<Set<S>, I>, Set<S>>> computation = compute(oneWayNFSM, input);
+        return computation.get(computation.size() - 1).getValue();
+    }
+
     /* Retrieves the reachable states of the one-way nondeterministic finite-state machines in this package. */
     static <S, I> Set<S> reachableStates(Set<I> inputElements, Map<Entry<S, I>, Set<S>> transitions, S startState) {
         Set<S> reachableStates = new HashSet<>();
@@ -50,9 +102,9 @@ class OneWayNFSMs {
         // Continue until transitions have been taken for all visited states on every input element, as well as null.
         while (!visit.isEmpty()) {
             for (I inputElement : inputElementsWithNull) {
-                Set<S> transitionValue = transitions.get(new SimpleEntry<>(visit.getFirst(), inputElement));
-                if (transitionValue != null)
-                    for (S state : transitionValue)
+                Set<S> output = transitions.get(new SimpleEntry<>(visit.getFirst(), inputElement));
+                if (output != null)
+                    for (S state : output)
                         // Add the resulting state of the transition to be visited if it was not already reached.
                         if (reachableStates.add(state))
                             visit.add(state);

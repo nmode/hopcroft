@@ -87,8 +87,7 @@ public class OneWayNFSA<S, I> extends AbstractNFSA<S, I, Entry<S, I>, Set<S>, Li
      *                                  values that are not subsets of its set of states
      */
     public OneWayNFSA(NFSM<S, I, Entry<S, I>, Set<S>, ?> n, Set<S> acceptStates) {
-        this(Objects.requireNonNull(n,
-                "Cannot construct a one-way nondeterministic finite-state acceptor from a null "
+        this(Objects.requireNonNull(n, "Cannot construct a one-way nondeterministic finite-state acceptor from a null "
                         + "nondeterministic finite-state machine.")
                 .states(), n.inputElements(), n.transitions(), n.startState(), acceptStates);
     }
@@ -110,16 +109,31 @@ public class OneWayNFSA<S, I> extends AbstractNFSA<S, I, Entry<S, I>, Set<S>, Li
         this(n, Set.of());
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * The computation is described by a list of entries. The entry at index {@code i} represents step {@code i} of the
+     * computation. Each entry has a subentry as its key; the subentry's key is the set of current states and its value
+     * is the element read. The value of each entry is the {@link #epsilonClosure(Set) epsilon closure} of the union of
+     * the output of this machine's {@link #transitions() transition map} on every current state with the current
+     * element. In other words, each entry is the combination of the transitions undergone at the same step of every
+     * active branch.
+     * <p>
+     * Every computation contains an entry at index {@code 0}. Its subentry consists of the singleton set containing the
+     * {@link #startState() start state} and {@code null} as the key and value, respectively, and its value is the
+     * epsilon closure of the start state. This is interpreted as the machine beginning at the start state and
+     * transitioning before reading any element.
+     * 
+     * @throws NullPointerException {@inheritDoc}
+     */
     @Override
     public final List<Entry<Entry<Set<S>, I>, Set<S>>> compute(List<I> input) {
-        // TODO
-        return null;
+        return OneWayNFSMs.compute(this, input);
     }
 
     @Override
     public final Set<S> classify(List<I> input) {
-        // TODO
-        return null;
+        return OneWayNFSMs.classify(this, input);
     }
 
     @Override

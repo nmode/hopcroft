@@ -77,16 +77,30 @@ public class OneWayMealyNFST<S, I, O>
                 .states(), n.inputElements(), n.transitions(), n.startState(), outputElements, translations);
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * The computation is described by a list of entries. The entry at index {@code i} represents step {@code i} of the
+     * computation. Each entry has a subentry as its key; the subentry's key is the set of current states and its value
+     * is the element read. The value of each entry is the union of the output of this machine's {@link #transitions()
+     * transition map} on every current state with the current element. In other words, each entry is the combination of
+     * the transitions undergone at the same step of every active branch.
+     * <p>
+     * Every computation contains an entry at index {@code 0}. Its subentry consists of the singleton set containing the
+     * {@link #startState() start state} and {@code null} as the key and value, respectively, and its value is the same
+     * singleton set. This is interpreted as the machine beginning and staying at the start state before reading any
+     * element.
+     * 
+     * @throws NullPointerException {@inheritDoc}
+     */
     @Override
     public final List<Entry<Entry<Set<S>, I>, Set<S>>> compute(List<I> input) {
-        // TODO
-        return null;
+        return OneWayNFSMs.compute(this, input);
     }
 
     @Override
     public final Set<S> classify(List<I> input) {
-        // TODO
-        return null;
+        return OneWayNFSMs.classify(this, input);
     }
 
     @Override
