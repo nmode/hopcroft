@@ -87,7 +87,8 @@ public class OneWayNFSA<S, I> extends AbstractNFSA<S, I, Entry<S, I>, Set<S>, Li
      *                                  values that are not subsets of its set of states
      */
     public OneWayNFSA(NFSM<S, I, Entry<S, I>, Set<S>, ?> n, Set<S> acceptStates) {
-        this(Objects.requireNonNull(n, "Cannot construct a one-way nondeterministic finite-state acceptor from a null "
+        this(Objects.requireNonNull(n,
+                "Cannot construct a one-way nondeterministic finite-state acceptor from a null "
                         + "nondeterministic finite-state machine.")
                 .states(), n.inputElements(), n.transitions(), n.startState(), acceptStates);
     }
@@ -172,6 +173,28 @@ public class OneWayNFSA<S, I> extends AbstractNFSA<S, I, Entry<S, I>, Set<S>, Li
                             visit.addLast(s);
             }
         }
+        return epsilonClosure;
+    }
+
+    /**
+     * Returns the epsilon closure of the specified set of states in this one-way nondeterministic finite-state
+     * acceptor. The returned set contains the states of this acceptor that are reachable from any state in the
+     * specified set via zero or more epsilon transitions.
+     * 
+     * @param states the set of states whose epsilon closure is to be taken
+     * 
+     * @return the epsilon closure of the specified set of states in this one-way nondeterministic finite-state acceptor
+     * 
+     * @see #epsilonClosure(Object)
+     */
+    public final Set<S> epsilonClosure(Set<S> states) {
+        if (states == null)
+            throw new NullPointerException("Cannot take the epsilon closure of a null set of states in a one-way "
+                    + "nondeterministic finite-state acceptor.");
+
+        Set<S> epsilonClosure = new HashSet<>();
+        for (S state : states)
+            epsilonClosure.addAll(epsilonClosure(state));
         return epsilonClosure;
     }
 
