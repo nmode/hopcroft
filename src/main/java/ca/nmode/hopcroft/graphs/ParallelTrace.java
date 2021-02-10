@@ -6,6 +6,8 @@ import java.util.Set;
 
 import org.jgrapht.graph.DirectedMultigraph;
 
+import ca.nmode.hopcroft.machines.NFSM;
+
 /**
  * A {@link ca.nmode.hopcroft.graphs graph} representation of a {@link NFSM nondeterministic finite-state machine}'s
  * computation. A parallel trace's {@link StateVertex vertex} is a container for any object, and so vertices

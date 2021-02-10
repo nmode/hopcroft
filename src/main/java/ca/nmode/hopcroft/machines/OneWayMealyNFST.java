@@ -54,7 +54,7 @@ public class OneWayMealyNFST<S, I, O>
      * finite-state machine's set of states, set of input elements, transition map and start state, as well as the
      * specified set of output elements and translation map.
      * 
-     * @param d              the nondeterministic finite-state machine whose set of states, set of input elements,
+     * @param n              the nondeterministic finite-state machine whose set of states, set of input elements,
      *                       transition map and start state is used to construct the new one-way nondeterministic
      *                       finite-state mealy transducer
      * @param outputElements the set of output elements of the new one-way nondeterministic finite-state mealy

@@ -11,10 +11,9 @@ import ca.nmode.hopcroft.graphs.SerialTrace;
 import ca.nmode.hopcroft.graphs.StateDiagram;
 
 /**
- * A one-way {@link MealyDFST deterministic finite-state mealy transducer}. During a {@link #computation(List)
- * computation}, it reads the elements in an input sequentially, from left to right, and halts once a
- * {@link DeterministicFSM#transitions() transition} on the last element is taken, provided it has not halted before
- * then.
+ * A one-way {@link MealyDFST deterministic finite-state mealy transducer}. During a {@link #compute(List) computation},
+ * it reads the elements in an input sequentially, from left to right, and halts once a {@link DFSM#transitions()
+ * transition} on the last element is taken, provided it has not halted before then.
  *
  * @param <S> the type of this one-way deterministic finite-state mealy transducer's states
  * @param <I> the type of this one-way deterministic finite-state mealy transducer's input elements
@@ -84,9 +83,9 @@ public class OneWayMealyDFST<S, I, O> extends AbstractMealyDFST<S, I, Entry<S, I
      * The computation is described by a list of entries. An entry at index {@code i} represents step {@code i} of the
      * computation, where the key is itself an entry of the current state and element read, and the value is the
      * resulting state. In other words, each entry is a transition undergone in the computation. The entry at index
-     * {@code 0} consists of the {@link DeterministicFSM#startState() start state} and {@code null} as its entry key,
-     * and the start state as its value, which is interpreted as the machine beginning and staying at the start state on
-     * reading no element (i.e., before reading any element in the input).
+     * {@code 0} consists of the {@link DFSM#startState() start state} and {@code null} as its entry key, and the start
+     * state as its value, which is interpreted as the machine beginning and staying at the start state on reading no
+     * element (i.e., before reading any element in the input).
      * 
      * @throws NullPointerException {@inheritDoc}
      */
@@ -127,9 +126,9 @@ public class OneWayMealyDFST<S, I, O> extends AbstractMealyDFST<S, I, Entry<S, I
      * 
      * @return this one-way deterministic finite-state mealy transducer's set of reachable states
      * 
-     * @see DeterministicFSM#states()
-     * @see DeterministicFSM#transitions()
-     * @see DeterministicFSM#startState()
+     * @see DFSM#states()
+     * @see DFSM#transitions()
+     * @see DFSM#startState()
      */
     public final Set<S> reachableStates() {
         return OneWayDFSMs.reachableStates(inputElements, transitions, startState);
