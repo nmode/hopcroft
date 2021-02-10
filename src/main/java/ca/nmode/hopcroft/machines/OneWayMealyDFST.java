@@ -80,12 +80,14 @@ public class OneWayMealyDFST<S, I, O> extends AbstractMealyDFST<S, I, Entry<S, I
     /**
      * {@inheritDoc}
      * <p>
-     * The computation is described by a list of entries. An entry at index {@code i} represents step {@code i} of the
-     * computation, where the key is itself an entry of the current state and element read, and the value is the
-     * resulting state. In other words, each entry is a transition undergone in the computation. The entry at index
-     * {@code 0} consists of the {@link DFSM#startState() start state} and {@code null} as its entry key, and the start
-     * state as its value, which is interpreted as the machine beginning and staying at the start state on reading no
-     * element (i.e., before reading any element in the input).
+     * The computation is described by a list of entries. The entry at index {@code i} represents step {@code i} of the
+     * computation. Each entry has a subentry as its key; the subentry's key is the current state and its value is the
+     * element read. The value of each entry is the output of this machine's {@link #transitions()} transition map} on
+     * the subentry. In other words, each entry is an undergone transition.
+     * <p>
+     * Every computation contains an entry at index {@code 0}. Its subentry consists of the {@link #startState() start
+     * state} and {@code null} as the key and value, respectively, and its value is also the start state. This is
+     * interpreted as the machine beginning and staying at the start state before reading any element.
      * 
      * @throws NullPointerException {@inheritDoc}
      */
