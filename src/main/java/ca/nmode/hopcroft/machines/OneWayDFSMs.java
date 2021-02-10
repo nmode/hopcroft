@@ -10,7 +10,7 @@ import java.util.ArrayDeque;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import ca.nmode.hopcroft.graphs.LinearTrace;
+import ca.nmode.hopcroft.graphs.SerialTrace;
 import ca.nmode.hopcroft.graphs.StateDiagram;
 import ca.nmode.hopcroft.graphs.StateVertex;
 import ca.nmode.hopcroft.graphs.TransitionEdge;
@@ -110,10 +110,10 @@ class OneWayDFSMs {
     }
 
     /* Constructs traces of the one-way deterministic finite-state machines' computations in this package. */
-    static <S, I> LinearTrace<S, I> trace(List<I> input, Map<Entry<S, I>, S> transitions, S startState) {
+    static <S, I> SerialTrace<S, I> trace(List<I> input, Map<Entry<S, I>, S> transitions, S startState) {
         List<Entry<Entry<S, I>, S>> computation = compute(input, transitions, startState);
         StateVertex<S> currentStateVertex = new StateVertex<>(startState);
-        LinearTrace<S, I> trace = new LinearTrace<>(currentStateVertex);
+        SerialTrace<S, I> trace = new SerialTrace<>(currentStateVertex);
         trace.addVertex(currentStateVertex);
         for (Entry<Entry<S, I>, S> step : computation.subList(1, computation.size())) {
             StateVertex<S> nextStateVertex = new StateVertex<>(step.getValue());

@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import ca.nmode.hopcroft.graphs.LinearTrace;
+import ca.nmode.hopcroft.graphs.SerialTrace;
 import ca.nmode.hopcroft.graphs.StateDiagram;
 
 /**
@@ -152,7 +152,7 @@ public class OneWayMooreDFST<S, I, O> extends AbstractMooreDFST<S, I, Entry<S, I
      * @return the linear trace of this one-way deterministic finite-state moore transducer's computation on the
      *         specified input
      */
-    public final LinearTrace<S, I> trace(List<I> input) {
+    public final SerialTrace<S, I> trace(List<I> input) {
         return OneWayDFSMs.trace(input, transitions, startState);
     }
 }
