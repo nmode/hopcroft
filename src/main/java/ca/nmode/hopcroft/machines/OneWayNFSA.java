@@ -2,6 +2,7 @@ package ca.nmode.hopcroft.machines;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayDeque;
+import java.util.Collections;
 import java.util.Deque;
 import java.util.HashSet;
 import java.util.List;
@@ -138,14 +139,29 @@ public class OneWayNFSA<S, I> extends AbstractNFSA<S, I, Entry<S, I>, Set<S>, Li
 
     @Override
     public final boolean accepts(List<I> input) {
-        // TODO
-        return false;
+        List<Entry<Entry<Set<S>, I>, Set<S>>> computation = compute(input);
+        return !Collections.disjoint(acceptStates, computation.get(computation.size() - 1).getValue());
     }
 
     @Override
     public final boolean recognizes(Set<List<I>> inputs) {
-        // TODO
-        return false;
+        // Ensure the set of inputs neither is nor contains null.
+        if (inputs == null)
+            throw new NullPointerException("A one-way nondeterministic finite-state acceptor cannot attempt to "
+                    + "recognize a null set of inputs.");
+        if (inputs.contains(null))
+            throw new NullPointerException("A one-way nondeterministic finite-state acceptor cannot attempt to "
+                    + "recognize a set of inputs that contains null.");
+
+        // The empty set is recognized if there are no reachable accept states.
+        if (inputs.isEmpty())
+            return Collections.disjoint(acceptStates, reachableStates());
+
+        // Return true if every input in the set is accepted, false otherwise.
+        for (List<I> input : inputs)
+            if (!accepts(input))
+                return false;
+        return true;
     }
 
     /**
