@@ -11,13 +11,15 @@ import java.util.Set;
  * 
  * @param <S> the type of this nondeterministic finite-state machine's states
  * @param <I> the type of this nondeterministic finite-state machine's input elements
+ * @param <O> the type of this nondeterministic finite-state machine's output elements
  * @param <K> the type of the keys of this nondeterministic finite-state machine's transition map
  * @param <V> the type of the values of this nondeterministic finite-state machine's transition map
  * @param <C> the type of this nondeterministic finite-state machine's computations
  *
  * @author Naeem Model
  */
-public abstract class AbstractNFSM<S, I, K, V, C> extends AbstractFSM<S, I, K, V> implements NFSM<S, I, K, V, C> {
+public abstract class AbstractNFSM<S, I, O, K, V, C> extends AbstractFSM<S, I, O, K, V>
+        implements NFSM<S, I, O, K, V, C> {
     /**
      * Constructs a nondeterministic finite-state machine given a set of states, set of input elements, transition map
      * and start state.
@@ -32,8 +34,24 @@ public abstract class AbstractNFSM<S, I, K, V, C> extends AbstractFSM<S, I, K, V
      *                                  {@code transitions} contains {@code null} keys or values
      * @throws IllegalArgumentException if {@code states} is empty, or {@code startState} is not in {@code states}
      */
-    public AbstractNFSM(Set<S> states, Set<I> inputElements, Map<K, V> transitions, S startState) {
-        super(states, inputElements, transitions, startState);
+    AbstractNFSM(Set<S> states, Set<S> acceptStates, S startState, Set<I> inputElements, Set<O> outputElements,
+            Map<K, V> transitions, Map<K, O> MealyTranslations, Map<S, O> MooreTranslations) {
+        super(states, acceptStates, startState, inputElements, outputElements, transitions, MealyTranslations,
+                MooreTranslations);
+    }
+
+    public AbstractNFSM(Set<S> states, S startState, Set<I> inputElements, Set<O> outputElements, Map<K, V> transitions,
+            Map<K, O> MealyTranslations, Map<S, O> MooreTranslations) {
+        this(states, Set.of(), startState, inputElements, outputElements, transitions, MealyTranslations,
+                MooreTranslations);
+    }
+
+    public AbstractNFSM(Set<S> states, Set<S> acceptStates, S startState, Set<I> inputElements, Map<K, V> transitions) {
+        this(states, acceptStates, startState, inputElements, Set.of(), transitions, Map.of(), Map.of());
+    }
+
+    public AbstractNFSM(Set<S> states, S startState, Set<I> inputElements, Map<K, V> transitions) {
+        this(states, Set.of(), startState, inputElements, Set.of(), transitions, Map.of(), Map.of());
     }
 
     @Override
@@ -42,8 +60,23 @@ public abstract class AbstractNFSM<S, I, K, V, C> extends AbstractFSM<S, I, K, V
     }
 
     @Override
+    public Set<S> acceptStates() {
+        return acceptStates;
+    }
+
+    @Override
+    public final S startState() {
+        return startState;
+    }
+
+    @Override
     public final Set<I> inputElements() {
         return inputElements;
+    }
+
+    @Override
+    public final Set<O> outputElements() {
+        return outputElements;
     }
 
     @Override
@@ -52,7 +85,12 @@ public abstract class AbstractNFSM<S, I, K, V, C> extends AbstractFSM<S, I, K, V
     }
 
     @Override
-    public final S startState() {
-        return startState;
+    public final Map<K, O> MealyTranslations() {
+        return MealyTranslations;
+    }
+
+    @Override
+    public final Map<S, O> MooreTranslations() {
+        return MooreTranslations;
     }
 }

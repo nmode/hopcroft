@@ -7,13 +7,18 @@ import java.util.Map;
 import java.util.Set;
 
 /* A skeletal implementation of a finite-state machine. */
-abstract class AbstractFSM<S, I, K, V> {
+abstract class AbstractFSM<S, I, O, K, V> {
     final Set<S> states;
-    final Set<I> inputElements;
-    final Map<K, V> transitions;
+    final Set<S> acceptStates;
     final S startState;
+    final Set<I> inputElements;
+    final Set<O> outputElements;
+    final Map<K, V> transitions;
+    final Map<K, O> MealyTranslations;
+    final Map<S, O> MooreTranslations;
 
-    AbstractFSM(Set<S> states, Set<I> inputElements, Map<K, V> transitions, S startState) {
+    AbstractFSM(Set<S> states, Set<S> acceptStates, S startState, Set<I> inputElements, Set<O> outputElements,
+            Map<K, V> transitions, Map<K, O> MealyTranslations, Map<S, O> MooreTranslations) {
         // Ensure the set of states neither is nor contains null, and is non-empty.
         if (states == null)
             throw new NullPointerException("Cannot construct a finite-state machine whose set of states is null.");
@@ -24,6 +29,21 @@ abstract class AbstractFSM<S, I, K, V> {
         if (states.isEmpty())
             throw new IllegalArgumentException("Cannot construct a finite-state machine whose set of states is empty.");
 
+        // Ensure the set of accept states is not null and is a subset of the set of states.
+        if (acceptStates == null)
+            throw new NullPointerException(
+                    "Cannot construct a finite-state machine whose set of accept states is null.");
+        if (!this.states.containsAll(acceptStates))
+            throw new IllegalArgumentException("Cannot construct a finite-state machine whose set of accept states is "
+                    + "not a subset of its set of states.");
+        this.acceptStates = Collections.unmodifiableSet(new HashSet<>(acceptStates));
+
+        // Ensure the start state is in the set of states.
+        if (!this.states.contains(startState))
+            throw new IllegalArgumentException(
+                    "Cannot construct a finite-state machine whose start state is not in its set of states.");
+        this.startState = startState;
+
         // Ensure the set of input elements neither is nor contains null.
         if (inputElements == null)
             throw new NullPointerException(
@@ -32,6 +52,15 @@ abstract class AbstractFSM<S, I, K, V> {
         if (this.inputElements.contains(null))
             throw new NullPointerException(
                     "Cannot construct a finite-state machine whose set of input elements contains null.");
+
+        // Ensure the set of output elements neither is nor contains null.
+        if (outputElements == null)
+            throw new NullPointerException(
+                    "Cannot construct a finite-state machine whose set of output elements is null.");
+        this.outputElements = Collections.unmodifiableSet(new HashSet<>(outputElements));
+        if (this.outputElements.contains(null))
+            throw new NullPointerException(
+                    "Cannot construct a finite-state machine whose set of output elements contains null.");
 
         // Ensure the transition map neither is nor contains keys or values that are null.
         if (transitions == null)
@@ -44,59 +73,30 @@ abstract class AbstractFSM<S, I, K, V> {
             throw new NullPointerException(
                     "Cannot construct a finite-state machine whose transition map contains null values.");
 
-        // Ensure the start state is in the set of states.
-        if (!this.states.contains(startState))
-            throw new IllegalArgumentException(
-                    "Cannot construct a finite-state machine whose start state is not in its set of states.");
-        this.startState = startState;
-    }
-
-    /* Verifies the accept states of the abstract finite-state acceptors in this package. */
-    static <S> Set<S> verifyAcceptStates(Set<S> states, Set<S> acceptStates) {
-        // Ensure the set of accept states is not null and is a subset of the set of states.
-        if (acceptStates == null)
+        /* Ensure the Mealy translation map is not null, its values are in the set of output elements and its key set is
+           equal to the transition map's key set. */
+        if (MealyTranslations == null)
             throw new NullPointerException(
-                    "Cannot construct a finite-state acceptor whose set of accept states is null.");
-        if (!states.containsAll(acceptStates))
-            throw new IllegalArgumentException("Cannot construct a finite-state acceptor whose set of accept states is "
-                    + "not a subset of its set of states.");
-        return Collections.unmodifiableSet(new HashSet<>(acceptStates));
-    }
-
-    /* Verifies the output elements of the abstract finite-state transducers in this package. */
-    static <O> Set<O> verifyOutputElements(Set<O> outputElements) {
-        // Ensure the set of output elements neither is nor contains null.
-        if (outputElements == null)
-            throw new NullPointerException(
-                    "Cannot construct a finite-state transducer whose set of output elements is null.");
-        Set<O> unmodifiableOutputElements = Collections.unmodifiableSet(new HashSet<>(outputElements));
-        if (unmodifiableOutputElements.contains(null))
-            throw new NullPointerException(
-                    "Cannot construct a finite-state transducer whose set of output elements contains null.");
-        return unmodifiableOutputElements;
-    }
-
-    /* Verifies the translation maps of the abstract finite-state transducers in this package. */
-    static <S, O, T> Map<T, O> verifyTranslations(AbstractFSM<S, ?, ?, ?> transducer, Set<O> outputElements,
-            Map<T, O> translations) {
-        // Ensure the translation map is not null, and its values are in the set of output elements.
-        if (translations == null)
-            throw new NullPointerException("Cannot construct a finite-state transducer whose translation map is null.");
-        if (!outputElements.containsAll(translations.values()))
-            throw new IllegalArgumentException("Cannot construct a finite-state transducer whose translation map "
+                    "Cannot construct a finite-state machine whose Mealy translation map is null.");
+        if (!this.outputElements.containsAll(MealyTranslations.values()))
+            throw new IllegalArgumentException("Cannot construct a finite-state machine whose Mealy translation map "
                     + "contains values that are not in its set of output elements.");
+        if (!MealyTranslations.keySet().equals(transitions.keySet()))
+            throw new IllegalArgumentException("Cannot construct a finite-state machine whose Moore translation map's "
+                    + "key set is not equal to its transition map's key set.");
+        this.MealyTranslations = Collections.unmodifiableMap(MealyTranslations);
 
-        // Ensure the translation map's key set is equal to the transition map's key set if the transducer is mealy.
-        if ((transducer instanceof AbstractMealyDFST || transducer instanceof AbstractMealyNFST)
-                && !translations.keySet().equals(transducer.transitions.keySet()))
-            throw new IllegalArgumentException("Cannot construct a finite-state mealy transducer whose translation "
-                    + "map's key set is not equal to its transition map's key set.");
-
-        // Ensure the translation map's key set is equal to the set of states if the transducer is moore.
-        if ((transducer instanceof AbstractMooreDFST || transducer instanceof AbstractMooreNFST)
-                && !translations.keySet().equals(transducer.states))
-            throw new IllegalArgumentException("Cannot construct a finite-state moore transducer whose translation "
-                    + "map's key set is not equal to its set of states.");
-        return Collections.unmodifiableMap(new HashMap<>(translations));
+        /* Ensure the Moore translation map is not null, its values are in the set of output elements and its key set is
+           equal to the set of states. */
+        if (MooreTranslations == null)
+            throw new NullPointerException(
+                    "Cannot construct a finite-state machine whose Moore translation map is null.");
+        if (!this.outputElements.containsAll(MooreTranslations.values()))
+            throw new IllegalArgumentException("Cannot construct a finite-state machine whose Moore translation map "
+                    + "contains values that are not in its set of output elements.");
+        if (!MooreTranslations.keySet().equals(states))
+            throw new IllegalArgumentException("Cannot construct a finite-state machine whose Moore translation map's "
+                    + "key set is not equal to its set of states.");
+        this.MooreTranslations = Collections.unmodifiableMap(MooreTranslations);
     }
 }
