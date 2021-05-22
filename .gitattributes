@@ -1,6 +1,6 @@
 # Normalize Git files.
-.gitattribute text
-.gitignore    text
+.gitattributes text
+.gitignore     text
 
 # Normalize LICENSE and README.
 LICENSE   text
